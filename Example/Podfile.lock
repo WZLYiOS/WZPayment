@@ -1,0 +1,31 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - KeychainAccess (3.2.1)
+  - WZPayment (0.1.2):
+    - KeychainAccess (~> 3.2.0)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase (~> 2.1.4)
+  - WZPayment (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+    - KeychainAccess
+
+EXTERNAL SOURCES:
+  WZPayment:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
+  WZPayment: d27fdfc77c8a644194a58f69ee6518300e310a5d
+
+PODFILE CHECKSUM: 200470f8e5a3cabd7b6ea7169fcc463024d8daaf
+
+COCOAPODS: 1.9.1
