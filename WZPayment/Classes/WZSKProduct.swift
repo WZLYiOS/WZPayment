@@ -94,20 +94,26 @@ public class WZSKModel: Codable {
     
     /// 获取沙河中凭证
     public var receipt: String {
-        guard let url = Bundle.main.appStoreReceiptURL else {
-            return ""
-        }
-        let receiptData = try? Data(contentsOf: url)
         let base64String = receiptData?.base64EncodedString(options: .endLineWithLineFeed) ?? ""
         return base64String
     }
     
+    /// 支付凭证
+    public var receiptData: Data? {
+        guard let url = Bundle.main.appStoreReceiptURL else {
+            return nil
+        }
+        let receiptData = try? Data(contentsOf: url)
+        return receiptData
+    }
+    
     /// 保存钥匙串的key
     public var saveKey: String {
+        let orderKey = "com.wzly.keych.order."
         if orderId.count > 0 {
-            return "com.wzly.keych.orderId."+orderId
+            return orderKey+orderId
         }
-        return "com.wzly.keych.transactionId."+transactionId
+        return orderKey+transactionId
     }
 }
 
@@ -118,6 +124,7 @@ extension SKError {
         case fail = 100330
         case order = 1002
         case canPay  = 1003
+        case history = 1004
        
         func error() -> Error {
             switch self {
@@ -127,6 +134,8 @@ extension SKError {
                 return NSError(domain: "请到系统设置，开启苹果支付功能", code: self.rawValue, userInfo: nil)
             case .fail:
                 return NSError(domain: "支付失败，请检查网络是否正常", code: self.rawValue, userInfo: nil)
+            case .history:
+                return NSError(domain: "当前有历史订单未补，请稍后再购买", code: self.rawValue, userInfo: nil)
             }
         }
     }

@@ -7,18 +7,61 @@
 //
 
 import UIKit
+import WZPayment
 
-class ViewController: UIViewController {
+public class ViewController: UIViewController {
 
-    override func viewDidLoad() {
+    ///
+    private lazy var paymentStore: WZPaymentStore = {
+        return $0
+    }(WZPaymentStore(cDlegate: self))
+    
+    /// 产品id
+    public var dataList: [String] = ["a", "aa", "3333", "rrrrr"]
+    
+    /// 表格
+    private lazy var tableView: UITableView = {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        return $0
+    }(UITableView())
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        view.addSubview(tableView)
+        tableView.frame = view.bounds
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }
+
+// MARK - UITableViewDelegate, UITableViewDataSource
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataList.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        cell.textLabel?.text = dataList[indexPath.row]
+        return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        paymentStore.addPayment(productId: dataList[indexPath.row], orderId: "838383838") { (result) in
+            
+        } failHandler: { (error) in
+            debugPrint(error.localizedDescription)
+        }
+    }
+}
+
+// MARK - WZPaymentStoreDelegate
+extension ViewController: WZPaymentStoreDelegate {
+    public func paymentStore(strore: WZPaymentStore, data: WZSKModel) {
+        debugPrint("订单回调")
+    }
+}
+
 
