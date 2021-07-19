@@ -77,10 +77,9 @@ public class WZPaymentStore: NSObject {
         }
         
         /// 当前有未补的单
-        let arr = payments.filter({$0.transactionId.count > 0})
-        if arr.count > 0 {
+        if payments.filter({$0.transactionId.count > 0}).count > 0 {
             payFailHandler?(SKError.ErrorType.history.error())
-            restoreHandler?(arr)
+            restoreHandler?(payments)
             return
         }
         
@@ -147,10 +146,10 @@ extension WZPaymentStore {
     
     /// 补单
     public func restoreTransaction(restoreHandler: ((_ datas: [WZSKModel]) -> Void)?){
+        self.restoreHandler = restoreHandler
         if payments.count > 0 {
             restoreHandler?(payments)
         }else{
-            self.restoreHandler = restoreHandler
             SKPaymentQueue.default().restoreCompletedTransactions()
         }
     }
