@@ -113,7 +113,7 @@ public class WZSKModel: Codable {
         if orderId.count > 0 {
             return orderKey+orderId
         }
-        return orderKey+transactionId
+        return orderKey+"transactionId"+transactionId
     }
 }
 
@@ -125,7 +125,7 @@ extension SKError {
         case order = 1002
         case canPay  = 1003
         case history = 1004
-       
+        case saveError = 1005
         func error() -> Error {
             switch self {
             case .order:
@@ -136,6 +136,8 @@ extension SKError {
                 return NSError(domain: "支付失败，请检查网络是否正常", code: self.rawValue, userInfo: nil)
             case .history:
                 return NSError(domain: "当前有历史订单未补，请稍后再购买", code: self.rawValue, userInfo: nil)
+            case .saveError:
+                return NSError(domain: "订单保存失败，无法继续购买，请联系客服", code: self.rawValue, userInfo: nil)
             }
         }
     }
