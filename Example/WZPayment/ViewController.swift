@@ -29,7 +29,7 @@ public class ViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
         view.addSubview(tableView)
         tableView.frame = view.bounds
     }
