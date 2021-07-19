@@ -16,7 +16,6 @@ TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://code.aliyun.com/wzlyios/WZPayment.git'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'qiuqixiang' => '739140860@qq.com' }
   s.source           = { :git => 'https://code.aliyun.com/wzlyios/WZPayment.git', :tag => s.version.to_s }
