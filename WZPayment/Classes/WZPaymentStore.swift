@@ -77,8 +77,10 @@ public class WZPaymentStore: NSObject {
         }
         
         /// 当前有未补的单
-        if payments.filter({$0.transactionId.count > 0}).count > 0 {
+        let arr = payments.filter({$0.transactionId.count > 0})
+        if arr.count > 0 {
             payFailHandler?(SKError.ErrorType.history.error())
+            restoreHandler?(arr)
             return
         }
         
