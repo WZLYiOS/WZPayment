@@ -39,10 +39,7 @@ public class WZPaymentStore: NSObject {
 
     /// 购买失败回调
     private var payFailHandler: WZPaymentFailBlock?
-    
-    /// 补单回调
-    public var restoreHandler: ((_ datas: [WZSKModel]) -> Void)?
-    
+        
     public override init() {
         super.init()
         SKPaymentQueue.default().add(self)
@@ -73,7 +70,7 @@ public class WZPaymentStore: NSObject {
         }
         
         /// 当前有未补的单
-        if restoreTransaction() {
+        if payments.filter({$0.transactionId.count > 0}).count > 0 {
             payFailHandler?(SKError.ErrorType.history.error())
             return
         }
@@ -133,10 +130,10 @@ extension WZPaymentStore {
     
     /// 补单
     @discardableResult
-    public func restoreTransaction() -> Bool{
+    public func restoreTransaction(restoreHandler: (_ datas: [WZSKModel]) -> Void) -> Bool{
         let arr = payments.filter({$0.transactionId.count > 0})
         if arr.count > 0 {
-            restoreHandler?(arr)
+            restoreHandler(arr)
             return true
         }
         return false
@@ -171,19 +168,24 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 ///2、applicationUsername 为空，拿到本地订单编号
                 ///3、保存新的支付数据存入数据库
                 
+                let orderId = tran.payment.applicationUsername ?? ""
+                let productId = tran.payment.productIdentifier
+                let transactionId = tran.transactionIdentifier ?? ""
+                let originalTransactionId = tran.original?.transactionIdentifier
+                
+                /// 支付数据
+                var model = WZSKModel(orderId: orderId, transactionId: transactionId, productId: productId, originalTransactionId: originalTransactionId)
+                
                 /// 获取本地相同订单
-                if let model = payments.first(where: {$0.productId == tran.payment.productIdentifier && $0.orderId.count > 0 && $0.transactionId.count == 0}) {
-                    model.transactionId = tran.transactionIdentifier ?? ""
-                    save(data: model)
+                if let data = payments.first(where: {$0.productId == tran.payment.productIdentifier && $0.orderId.count > 0 && $0.transactionId.count == 0}) {
+                    data.transactionId = tran.transactionIdentifier ?? ""
+                    model = data
                     debugPrint("支付成功，从本地拿订单编号\(model.orderId)")
-                    paySucessHandler?(model)
                 }else{
-                    /// 支付数据
-                    let model = WZSKModel(orderId: tran.payment.applicationUsername ?? "", transactionId: tran.transactionIdentifier ?? "", productId: tran.payment.productIdentifier, originalTransactionId: tran.original?.transactionIdentifier)
-                    save(data: model)
                     debugPrint("支付成功，苹果返回订单编号\(model.orderId)")
-                    paySucessHandler?(model)
                 }
+                save(data: model)
+                paySucessHandler?(model)
                 SKPaymentQueue.default().finishTransaction(tran)
             case .deferred:
                 SKPaymentQueue.default().finishTransaction(tran)

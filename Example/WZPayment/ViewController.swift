@@ -14,7 +14,7 @@ public class ViewController: UIViewController {
     ///
     private lazy var paymentStore: WZPaymentStore = {
         return $0
-    }(WZPaymentStore(cDlegate: self))
+    }(WZPaymentStore())
     
     /// 产品id
     public var dataList: [String] = ["a", "aa", "3333", "rrrrr"]
@@ -57,11 +57,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK - WZPaymentStoreDelegate
-extension ViewController: WZPaymentStoreDelegate {
-    public func paymentStore(strore: WZPaymentStore, data: WZSKModel) {
-        debugPrint("订单回调")
-    }
-}
+
 
 
