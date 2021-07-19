@@ -32,7 +32,5 @@ TODO: Add long description of the pod here.
   #   'WZPayment' => ['WZPayment/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'KeychainAccess', '~> 3.2.0'
 end
