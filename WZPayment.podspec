@@ -27,10 +27,5 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'WZPayment/Classes/*.swift'
-  
-  # s.resource_bundles = {
-  #   'WZPayment' => ['WZPayment/Assets/*.png']
-  # }
-
   s.dependency 'KeychainAccess', '~> 3.2.0'
 end
