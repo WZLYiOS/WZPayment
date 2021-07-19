@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WZPayment'
-  s.version          = '3.0.5'
+  s.version          = '3.0.6'
   s.summary          = '内购组件：支持自动补单，漏单可继续购买,订阅自动回调上报'
 
   s.description      = <<-DESC
