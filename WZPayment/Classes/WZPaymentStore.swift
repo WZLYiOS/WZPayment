@@ -145,12 +145,16 @@ extension WZPaymentStore {
     }
     
     /// 补单
-    public func restoreTransaction(restoreHandler: ((_ datas: [WZSKModel]) -> Void)?){
+    public func restoreTransaction(isRefreshApple: Bool = false, restoreHandler: ((_ datas: [WZSKModel]) -> Void)?){
         self.restoreHandler = restoreHandler
         if payments.count > 0 {
             restoreHandler?(payments)
         }else{
-            SKPaymentQueue.default().restoreCompletedTransactions()
+            if isRefreshApple {
+                SKPaymentQueue.default().restoreCompletedTransactions()
+            }else{
+                restoreHandler?(payments)
+            }
         }
     }
 }
@@ -168,7 +172,7 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
             return false
         })
     
-        for tran in tranList {
+        for (index, tran) in tranList.enumerated() {
             switch tran.transactionState {
             case .restored:
                 restoreHandler?([WZSKModel(orderId: "", transactionId: tran.transactionIdentifier ?? "", productId: tran.payment.productIdentifier)])
@@ -206,7 +210,7 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 if currentOrderId == model.orderId {
                     paySucessHandler?(model)
                 }else{
-                    if productId == tranList.last?.payment.productIdentifier {
+                    if index == tranList.count - 1 {
                         restoreHandler?(payments)
                     }
                 }
