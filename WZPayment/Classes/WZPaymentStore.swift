@@ -145,9 +145,8 @@ extension WZPaymentStore {
     
     /// 补单
     public func restoreTransaction(restoreHandler: ((_ datas: [WZSKModel]) -> Void)?){
-        let arr = payments.filter({$0.transactionId.count > 0})
-        if arr.count > 0 {
-            restoreHandler?(arr)
+        if payments.count > 0 {
+            restoreHandler?(payments)
         }else{
             self.restoreHandler = restoreHandler
             SKPaymentQueue.default().restoreCompletedTransactions()
