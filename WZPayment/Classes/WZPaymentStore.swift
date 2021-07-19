@@ -205,6 +205,10 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 save(data: model)
                 if currentOrderId == model.orderId {
                     paySucessHandler?(model)
+                }else{
+                    if productId == tranList.last?.payment.productIdentifier {
+                        restoreHandler?(payments)
+                    }
                 }
                 SKPaymentQueue.default().finishTransaction(tran)
             case .deferred:
