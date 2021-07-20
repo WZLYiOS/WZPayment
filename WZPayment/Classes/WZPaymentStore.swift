@@ -179,6 +179,9 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 save(data: WZSKModel(orderId: "",
                                      transactionId: tran.transactionIdentifier ?? "",
                                      productId: tran.payment.productIdentifier))
+                if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
+                    restoreHandler?(payments)
+                }
                 SKPaymentQueue.default().finishTransaction(tran)
             case .failed:
                 if let model = payments.first(where: {$0.orderId == currentOrderId}) {
@@ -213,19 +216,19 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                     debugPrint("支付成功，苹果返回订单编号\(model.orderId)")
                 }
                 save(data: model)
+                if model.orderId == currentOrderId {
+                    paySucessHandler?(model)
+                }else{
+                    if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
+                        restoreHandler?(payments)
+                    }
+                }
                 SKPaymentQueue.default().finishTransaction(tran)
             case .deferred:
                 SKPaymentQueue.default().finishTransaction(tran)
             case .purchasing: break
             @unknown default: break
             }
-        }
-        
-        if let model = payments.first(where: {$0.orderId == currentOrderId}) {
-            paySucessHandler?(model)
-            return
-        }else{
-            restoreHandler?(payments)
         }
     }
 }
