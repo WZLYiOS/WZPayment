@@ -65,20 +65,24 @@ public class WZPaymentStore: NSObject {
         currentOrderId = orderId
         
         /// 0: 检测订单id
-        if productId.isEmpty || orderId.isEmpty {
-            payFailHandler?(SKError.ErrorType.order.error())
+        if orderId.count == 0 {
+            payFailHandler?(WZPaymentError.orderNil.err)
+            return
+        }
+        if productId.count == 0 {
+            payFailHandler?(WZPaymentError.productNil.err)
             return
         }
         
         /// 1: 检测是否开启内购
         if !SKPaymentQueue.canMakePayments() {
-            payFailHandler?(SKError.ErrorType.canPay.error())
+            payFailHandler?(WZPaymentError.NoCanPay.err)
             return
         }
         
         /// 当前有未补的单
         if payments.filter({$0.transactionId.count > 0}).count > 0 {
-            payFailHandler?(SKError.ErrorType.history.error())
+            payFailHandler?(WZPaymentError.history.err)
             restoreHandler?(payments)
             return
         }
@@ -89,7 +93,7 @@ public class WZPaymentStore: NSObject {
             
             /// 保存钥匙串订单编号
             if !self.save(data: WZSKModel(orderId: orderId, transactionId: "", productId: productId)) {
-                self.payFailHandler?(SKError.ErrorType.order.error())
+                self.payFailHandler?(WZPaymentError.orderDb.err)
                 return
             }
             
@@ -176,18 +180,22 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
         for (_, tran) in transactions.enumerated() {
             switch tran.transactionState {
             case .restored:
-                save(data: WZSKModel(orderId: "",
+                let isSave = save(data: WZSKModel(orderId: "",
                                      transactionId: tran.transactionIdentifier ?? "",
                                      productId: tran.payment.productIdentifier))
-                if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
-                    restoreHandler?(payments)
+                if isSave {
+                    if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
+                        restoreHandler?(payments)
+                    }
+                    SKPaymentQueue.default().finishTransaction(tran)
+                }else{
+                    payFailHandler?(WZPaymentError.db.err)
                 }
-                SKPaymentQueue.default().finishTransaction(tran)
             case .failed:
                 if let model = payments.first(where: {$0.orderId == currentOrderId}) {
                     remove(key: model.saveKey)
                 }
-                callBackPayFail(error: tran.error ?? SKError.ErrorType.fail.error())
+                callBackPayFail(error: tran.error ?? SKError(_nsError: NSError(domain: "苹果服务器：支付发生未知错误", code: 10001)))
                 SKPaymentQueue.default().finishTransaction(tran)
             case .purchased:
                 

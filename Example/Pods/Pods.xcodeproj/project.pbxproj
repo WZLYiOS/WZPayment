@@ -15,6 +15,7 @@
 		14AD81D52FAD9CF2C065C61FB00C3B4F /* UIImage+Diff.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B47F3111AE5A113203BF83B621AC7F5 /* UIImage+Diff.m */; };
 		1ACF2FC833B5F57C96FD48DAE463ED09 /* Pods-WZPayment_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18B684FF3332F56531F788296EF7BD /* Pods-WZPayment_Tests-dummy.m */; };
 		26F11311FF026A5AAA454B6C78995DA4 /* Pods-WZPayment_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0901C91B19020F6BCA68229B47CD81 /* Pods-WZPayment_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		28BDF8CA29C9A5DF00F16801 /* WZPaymentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BDF8C929C9A5DF00F16801 /* WZPaymentError.swift */; };
 		2C9A1FFE2D7BFE21CF649AC685EB6A96 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */; };
 		2DCFF0CE0BD295F1D46D3247F36B192C /* UIImage+Compare.m in Sources */ = {isa = PBXBuildFile; fileRef = 082B486F96700E32DD7A7D614FD02DE5 /* UIImage+Compare.m */; };
 		2E4C0BD2363ABABB6470FBA5415985AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3280BB5E7B57C31D41117A74F76E9DF3 /* QuartzCore.framework */; };
@@ -94,7 +95,8 @@
 		1DA24A38BA9EE106B59E3D4C8DD1CE0E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		27798F0BD495DF23985DF66CF46F085D /* Pods-WZPayment_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WZPayment_Example-frameworks.sh"; sourceTree = "<group>"; };
 		27FAAB8D5E19044E309A7D30599E1F99 /* UIImage+Compare.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Compare.h"; path = "FBSnapshotTestCase/Categories/UIImage+Compare.h"; sourceTree = "<group>"; };
-		281EE5C032D2DDC7B9DA3DB4A16EA6FE /* Pods_WZPayment_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WZPayment_Example.framework; path = "Pods-WZPayment_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		281EE5C032D2DDC7B9DA3DB4A16EA6FE /* Pods_WZPayment_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZPayment_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		28BDF8C929C9A5DF00F16801 /* WZPaymentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WZPaymentError.swift; path = WZPayment/Classes/WZPaymentError.swift; sourceTree = "<group>"; };
 		3280BB5E7B57C31D41117A74F76E9DF3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		33F1F8B577F751595917B0E2E461C790 /* KeychainAccess-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KeychainAccess-dummy.m"; sourceTree = "<group>"; };
 		39567C3398B2542D8C70575B15DBA7E9 /* FBSnapshotTestCase-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FBSnapshotTestCase-prefix.pch"; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 		44F6732C3359AF97071615C3FF1E950B /* FBSnapshotTestCasePlatform.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSnapshotTestCasePlatform.m; path = FBSnapshotTestCase/FBSnapshotTestCasePlatform.m; sourceTree = "<group>"; };
 		4E0901C91B19020F6BCA68229B47CD81 /* Pods-WZPayment_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-WZPayment_Example-umbrella.h"; sourceTree = "<group>"; };
 		57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		5C4F31330DFA99D699E4BDC8C3573D73 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FBSnapshotTestCase.framework; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C4F31330DFA99D699E4BDC8C3573D73 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8E7DFFBDA40AB1D9F797377973A24C /* Pods-WZPayment_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WZPayment_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		5DE505D5CE6C23A98267307662277AF1 /* FBSnapshotTestCase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FBSnapshotTestCase.debug.xcconfig; sourceTree = "<group>"; };
 		5ECAE37AB7636A61299B53CD4BEB601F /* FBSnapshotTestCasePlatform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSnapshotTestCasePlatform.h; path = FBSnapshotTestCase/FBSnapshotTestCasePlatform.h; sourceTree = "<group>"; };
@@ -117,7 +119,7 @@
 		71DD8D6E25A8F97F2BD415A6A97A693D /* UIApplication+StrictKeyWindow.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+StrictKeyWindow.m"; path = "FBSnapshotTestCase/Categories/UIApplication+StrictKeyWindow.m"; sourceTree = "<group>"; };
 		75B7D3147467F2CB35ADD4BE7DFE2DA3 /* UIImage+Diff.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Diff.h"; path = "FBSnapshotTestCase/Categories/UIImage+Diff.h"; sourceTree = "<group>"; };
 		7AA0C04C8ED68A5E5BFA52125DC87D83 /* FBSnapshotTestCase.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FBSnapshotTestCase.modulemap; sourceTree = "<group>"; };
-		7B2F7346ECCC6A55208B1B61CC71E0DE /* WZPayment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = WZPayment.framework; path = WZPayment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B2F7346ECCC6A55208B1B61CC71E0DE /* WZPayment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WZPayment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B47F3111AE5A113203BF83B621AC7F5 /* UIImage+Diff.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Diff.m"; path = "FBSnapshotTestCase/Categories/UIImage+Diff.m"; sourceTree = "<group>"; };
 		7DEEFF88AFCB5350DEA7637B9E6223B8 /* WZPayment-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WZPayment-umbrella.h"; sourceTree = "<group>"; };
 		80787B3EDBC6A7AC935DF782E8AB501D /* Pods-WZPayment_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WZPayment_Tests-Info.plist"; sourceTree = "<group>"; };
@@ -125,12 +127,12 @@
 		86896CF6133BA85BA6BAC1CEE72B373C /* WZPayment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WZPayment.release.xcconfig; sourceTree = "<group>"; };
 		88F6E9BA60BB8497F1626621F907785E /* Pods-WZPayment_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-WZPayment_Tests-umbrella.h"; sourceTree = "<group>"; };
 		951754E8E5E7042E77DA7244C2F46AF7 /* KeychainAccess-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainAccess-prefix.pch"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DC1C3C1256B87F2B6DA84AD543196FF /* WZPayment.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WZPayment.modulemap; sourceTree = "<group>"; };
-		A5DBE709963195421C3EF1420D8C1ABC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		A5DBE709963195421C3EF1420D8C1ABC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A7AAF3324826F2AE1BED0635BA8529A4 /* Pods-WZPayment_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-WZPayment_Tests.modulemap"; sourceTree = "<group>"; };
 		ABF8400D092F7E530BE340577D044E03 /* Pods-WZPayment_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-WZPayment_Example.modulemap"; sourceTree = "<group>"; };
-		B1385A26F9D1F0CD992642C2CD3EF6B3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		B1385A26F9D1F0CD992642C2CD3EF6B3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B4E486BFCBF626207531654FF5FB2B88 /* KeychainAccess-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KeychainAccess-Info.plist"; sourceTree = "<group>"; };
 		BA96941954F22CD87537C995039C3D31 /* WZPayment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WZPayment.debug.xcconfig; sourceTree = "<group>"; };
 		C03FEDDC94C508D28730D20674E8D485 /* SwiftSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftSupport.swift; path = FBSnapshotTestCase/SwiftSupport.swift; sourceTree = "<group>"; };
@@ -140,13 +142,13 @@
 		CB417D20D003833EEA07FA03B52B5147 /* WZPaymentStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WZPaymentStore.swift; path = WZPayment/Classes/WZPaymentStore.swift; sourceTree = "<group>"; };
 		CC6BD31B0EEC3C5A8E87166A02B4AC74 /* UIImage+Snapshot.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Snapshot.h"; path = "FBSnapshotTestCase/Categories/UIImage+Snapshot.h"; sourceTree = "<group>"; };
 		CCBB9EAB5E276E9585687EAC8E205F41 /* KeychainAccess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainAccess.debug.xcconfig; sourceTree = "<group>"; };
-		CE403DDD6800484FB1A1D0FE024CA3AD /* WZPayment.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = WZPayment.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CE403DDD6800484FB1A1D0FE024CA3AD /* WZPayment.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = WZPayment.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D16F13D2C9ADC44FFCCFB0222213D7F3 /* Pods-WZPayment_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WZPayment_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		D5A872420B4957CA7A49A9EC402EB557 /* Pods_WZPayment_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WZPayment_Tests.framework; path = "Pods-WZPayment_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5A872420B4957CA7A49A9EC402EB557 /* Pods_WZPayment_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZPayment_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC3386780854A3589FB7187CC4A1CDA3 /* Pods-WZPayment_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WZPayment_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DF45C913FDC743E916BA1B1648FCEB17 /* KeychainAccess-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainAccess-umbrella.h"; sourceTree = "<group>"; };
 		E658F388F01C72599CA75537950B6095 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		E8EE7F078656FABB8F6821D10FF994BB /* KeychainAccess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KeychainAccess.framework; path = KeychainAccess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8EE7F078656FABB8F6821D10FF994BB /* KeychainAccess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeychainAccess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB234B3BBC55D514EC223B1F9CA924B5 /* Keychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Keychain.swift; path = Lib/KeychainAccess/Keychain.swift; sourceTree = "<group>"; };
 		EDDD76F5A6497B13BCA3F122D75C0898 /* KeychainAccess.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KeychainAccess.modulemap; sourceTree = "<group>"; };
 		EF18B684FF3332F56531F788296EF7BD /* Pods-WZPayment_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WZPayment_Tests-dummy.m"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				CB417D20D003833EEA07FA03B52B5147 /* WZPaymentStore.swift */,
+				28BDF8C929C9A5DF00F16801 /* WZPaymentError.swift */,
 				F8864CCFA1A269B7A0A4979DFDF6B1FA /* WZSKProduct.swift */,
 				E00B86C80BF89C7A8EF68A976D0129C6 /* Pod */,
 				86E31CAE456297A30EF186CB24208629 /* Support Files */,
@@ -344,7 +347,6 @@
 				ACF3F306C767235D4A92E38A9FA0F47B /* Support Files */,
 				B3915A05E3DEA5D599F7153986ED9055 /* SwiftSupport */,
 			);
-			name = FBSnapshotTestCase;
 			path = FBSnapshotTestCase;
 			sourceTree = "<group>";
 		};
@@ -354,7 +356,6 @@
 				EB234B3BBC55D514EC223B1F9CA924B5 /* Keychain.swift */,
 				E884A16E7FEB8B08EF7A153B9EBB593F /* Support Files */,
 			);
-			name = KeychainAccess;
 			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
@@ -653,6 +654,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28BDF8CA29C9A5DF00F16801 /* WZPaymentError.swift in Sources */,
 				A3C13B9D93260062B83D35584FA5CD35 /* WZPayment-dummy.m in Sources */,
 				DD6F84CAFD95FA3DEE3A1DFB148BB6D3 /* WZPaymentStore.swift in Sources */,
 				0C8596AB6DDB4890D9111BBA97AEE7FB /* WZSKProduct.swift in Sources */,
@@ -909,8 +911,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
