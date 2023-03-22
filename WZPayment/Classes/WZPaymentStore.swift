@@ -103,7 +103,7 @@ public class WZPaymentStore: NSObject {
             SKPaymentQueue.default().add(payment)
         }) { [weak self](error) in
             guard let self = self else { return }
-            self.callBackPayFail(error: error)
+            self.payFailHandler?(error.customError)
         }
     }
 }
@@ -141,11 +141,6 @@ extension WZPaymentStore {
             currentOrderId = nil
         }
         debugPrint("移除本地订单：\(key)")
-    }
-    
-    /// 支付失败回调
-    private func callBackPayFail(error: Error)  {
-        payFailHandler?(error)
     }
     
     /// 补单
@@ -195,7 +190,7 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 if let model = payments.first(where: {$0.orderId == currentOrderId}) {
                     remove(key: model.saveKey)
                 }
-                callBackPayFail(error: tran.error ?? SKError(_nsError: NSError(domain: "苹果服务器：支付发生未知错误", code: 10001)))
+                payFailHandler?(tran.error?.customError ?? SKError(_nsError: NSError(domain: "苹果服务器：支付发生未知错误", code: 10001)))
                 SKPaymentQueue.default().finishTransaction(tran)
             case .purchased:
                 

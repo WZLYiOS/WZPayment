@@ -64,3 +64,15 @@ extension SKError {
         }
     }
 }
+
+/// 扩展错误码
+extension Error {
+    
+    /// 自定义错误码
+    var customError: Error {
+        if let x = self as? SKError {
+            return x.wzError
+        }
+        return self
+    }
+}
