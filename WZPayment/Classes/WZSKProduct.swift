@@ -9,7 +9,7 @@ import Foundation
 import StoreKit
 
 // MARK - 获取苹果产品id请求
-public class WZSKProduct: NSObject, SKProductsRequestDelegate {
+public class WZSKProduct: NSObject {
     
     typealias ProductSucessBlock = (_ products: SKProduct) -> Void
     typealias productFailBlock = (_ error: Error) -> Void
@@ -30,6 +30,7 @@ public class WZSKProduct: NSObject, SKProductsRequestDelegate {
         productSucessHandler = sucessHandler
         productFailHandler = failHandler
         
+        /// 获取支付
         guard let product = sKProducts.filter({$0.productIdentifier == productId}).first else {
             requestProducts(products: [productId])
             return
@@ -46,12 +47,14 @@ public class WZSKProduct: NSObject, SKProductsRequestDelegate {
         productsRequest?.delegate = self
         productsRequest?.start()
     }
-    
+}
+
+/// MARK - SKProductsRequestDelegate
+extension WZSKProduct: SKProductsRequestDelegate {
     /// SKProductsRequestDelegate
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         if response.products.count == 0 {
-            let err = NSError(domain: "未获取到该产品", code: 100020, userInfo: nil)
-            productFailHandler?(err)
+            productFailHandler?(WZPaymentError.notproduct.err)
             return
         }
         sKProducts.append(contentsOf: response.products)
@@ -59,10 +62,10 @@ public class WZSKProduct: NSObject, SKProductsRequestDelegate {
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
-        productFailHandler?(error)
+        productFailHandler?(WZPaymentError.custom(error.localizedDescription).err)
     }
 }
-
+ 
 // MARK - 数据模型
 public class WZSKModel: Codable {
     
