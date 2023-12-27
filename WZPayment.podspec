@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.summary          = '内购组件：支持自动补单，漏单可继续购买,订阅自动回调上报'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+TODO: Add long description of t
                        DESC
 
   s.homepage         = 'https://github.com/WZLYiOS/WZPayment'
@@ -24,7 +24,7 @@ TODO: Add long description of the pod here.
   s.requires_arc = true
   s.static_framework = true
   s.swift_version         = '5.0'
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'WZPayment/Classes/*.swift'
   s.dependency 'KeychainAccess', '>= 3.2.0'
