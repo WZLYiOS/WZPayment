@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.summary          = '内购组件：支持自动补单，漏单可继续购买,订阅自动回调上报'
 
   s.description      = <<-DESC
-TODO: Add long description of t
+TODO: Add long description of t1212
                        DESC
 
   s.homepage         = 'https://github.com/WZLYiOS/WZPayment'
