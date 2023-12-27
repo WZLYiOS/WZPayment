@@ -27,5 +27,5 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'WZPayment/Classes/*.swift'
-  s.dependency 'KeychainAccess', '~> 3.2.0'
+  s.dependency 'KeychainAccess', '>= 3.2.0'
 end
