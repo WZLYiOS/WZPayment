@@ -7,7 +7,12 @@
 //
 
 import UIKit
+import RxSwift
 import WZPayment
+import WZRxExtension
+import WZProgressHUD
+import WZNetworks
+import Moya
 
 public class ViewController: UIViewController {
 
@@ -17,7 +22,7 @@ public class ViewController: UIViewController {
     }(WZPaymentStore())
     
     /// 产品id
-    public var dataList: [String] = ["a", "aa", "3333", "rrrrr"]
+    public var dataList: [String] = ["funfun_text_recharge_10000coins", "funfun_text_recharge_1800coins", "com.temtuux.1000", "2023120301", "2023120306", "2023120307"]
     
     /// 表格
     private lazy var tableView: UITableView = {
@@ -32,6 +37,12 @@ public class ViewController: UIViewController {
 
         view.addSubview(tableView)
         tableView.frame = view.bounds
+        
+        paymentStore.restoreTransaction { datas in
+            datas.forEach {
+                self.paymentStore.remove(key: $0.saveKey)
+            }
+        }
     }
 }
 
@@ -49,13 +60,41 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        paymentStore.addPayment(productId: dataList[indexPath.row], orderId: "838383838") { (result) in
-            
-        } failHandler: { (error) in
-            debugPrint(error.localizedDescription)
+        let model = dataList[indexPath.row]
+        WZProgressHUD.show()
+//        let xx = \(arc4random_uniform(10199993))
+        pay(orderId: "1739545410286882817", productId: model)
+            .flatMap{ result in
+                return PayApi.upload(orderId: result.orderId, transactionId: result.transactionId, productId: result.productId, originalTransactionId: result.originalTransactionId ?? "", receipt: result.receipt)
+                    .request()
+                    .mapSuccess(isDebug: true)
+                    .map { _ in
+                        self.paymentStore.remove(key: result.saveKey)
+                    }
+            }
+            .subscribe(onNext: { [weak self] (result) in
+                guard let self = self else { return }
+                WZProgressHUD.dismiss()
+            }, onError: { (error) in
+                WZProgressHUD.showError(withStatus: error.localizedDescription)
+            }).disposed(by: rx.disposeBag)
+    }
+    
+    /// 内购支付
+    private func pay(orderId: String, productId: String) -> Observable<WZSKModel> {
+        return Observable.create { (observable) -> Disposable in
+            self.paymentStore.addPayment(productId: productId, orderId: orderId) { model in
+                observable.onNext((model))
+                observable.onCompleted()
+            } failHandler: { error in
+                observable.onError(error)
+                observable.onCompleted()
+            }
+            return Disposables.create {}
         }
     }
 }
+
 
 
 

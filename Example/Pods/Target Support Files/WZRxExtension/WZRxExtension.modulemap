@@ -1,0 +1,6 @@
+framework module WZRxExtension {
+  umbrella header "WZRxExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}

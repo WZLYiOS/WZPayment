@@ -1,0 +1,6 @@
+framework module WZDeviceKit {
+  umbrella header "WZDeviceKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

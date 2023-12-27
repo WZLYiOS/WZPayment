@@ -3,6 +3,11 @@ use_frameworks!
 target 'WZPayment_Example' do
   pod 'WZPayment', :path => '../'
 
+  pod 'WZNetworks', '~> 6.1.9' #网络
+  pod 'WZRxExtension/DisposeBag', '~> 0.3.1' #RxDisposeBag
+  pod 'WZProgressHUD', '~> 1.1.2' #加载框
+  pod 'CleanJSON', '~> 1.0.9' #动态处理JSON问题
+  pod 'CocoaDebug', '~> 1.7.7'
   target 'WZPayment_Tests' do
     inherit! :search_paths
 

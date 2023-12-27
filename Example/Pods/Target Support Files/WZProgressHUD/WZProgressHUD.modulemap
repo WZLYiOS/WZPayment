@@ -1,0 +1,6 @@
+framework module WZProgressHUD {
+  umbrella header "WZProgressHUD-umbrella.h"
+
+  export *
+  module * { export * }
+}

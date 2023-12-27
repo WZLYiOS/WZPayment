@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		288FBF212B39C1FF004352F8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288FBF202B39C1FF004352F8 /* StoreKit.framework */; };
+		28F63AFC2B39AD8B00E04BFF /* PayApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F63AFB2B39AD8B00E04BFF /* PayApi.swift */; };
+		28F63AFF2B39B1CB00E04BFF /* JSONParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F63AFD2B39B1CB00E04BFF /* JSONParsing.swift */; };
+		28F63B002B39B1CB00E04BFF /* WZError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F63AFE2B39B1CB00E04BFF /* WZError.swift */; };
 		5D6B588B1245377C6735C7B0 /* Pods_WZPayment_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1568B4AFFA19045228D944F /* Pods_WZPayment_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -29,7 +33,11 @@
 
 /* Begin PBXFileReference section */
 		01A5780AD7FD68ED7BDA1D0F /* Pods-WZPayment_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZPayment_Example.debug.xcconfig"; path = "Target Support Files/Pods-WZPayment_Example/Pods-WZPayment_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		288FBF202B39C1FF004352F8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		28EB12F37ED4F5F81E769740 /* Pods-WZPayment_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZPayment_Example.release.xcconfig"; path = "Target Support Files/Pods-WZPayment_Example/Pods-WZPayment_Example.release.xcconfig"; sourceTree = "<group>"; };
+		28F63AFB2B39AD8B00E04BFF /* PayApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayApi.swift; sourceTree = "<group>"; };
+		28F63AFD2B39B1CB00E04BFF /* JSONParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParsing.swift; sourceTree = "<group>"; };
+		28F63AFE2B39B1CB00E04BFF /* WZError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WZError.swift; sourceTree = "<group>"; };
 		4D8ED0904292AD4AA9ACED48 /* Pods-WZPayment_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZPayment_Tests.debug.xcconfig"; path = "Target Support Files/Pods-WZPayment_Tests/Pods-WZPayment_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* WZPayment_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZPayment_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,6 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83F83C2F2ECFE74138834F87 /* Pods_WZPayment_Example.framework in Frameworks */,
+				288FBF212B39C1FF004352F8 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +104,9 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				28F63AFD2B39B1CB00E04BFF /* JSONParsing.swift */,
+				28F63AFE2B39B1CB00E04BFF /* WZError.swift */,
+				28F63AFB2B39AD8B00E04BFF /* PayApi.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -153,6 +165,7 @@
 		7C624F0B30D19B5A34F6069A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				288FBF202B39C1FF004352F8 /* StoreKit.framework */,
 				81BA119712373EB40181B5B7 /* Pods_WZPayment_Example.framework */,
 				F1568B4AFFA19045228D944F /* Pods_WZPayment_Tests.framework */,
 			);
@@ -171,6 +184,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				440B06450E329561A761F5D0 /* [CP] Embed Pods Frameworks */,
+				614E9B3B86CC5BC87B7B4374 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -213,10 +227,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = MV8GYHGPNQ;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = FZ8GWB3H9C;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -292,11 +308,27 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WZPayment_Example/Pods-WZPayment_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
+				"${BUILT_PRODUCTS_DIR}/CleanJSON/CleanJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaDebug/CocoaDebug.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaDebug.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -319,6 +351,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WZPayment_Tests/Pods-WZPayment_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		614E9B3B86CC5BC87B7B4374 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WZPayment_Example/Pods-WZPayment_Example-resources.sh",
+				"${PODS_ROOT}/WZProgressHUD/WZProgressHUD/Assets/WZProgressHUD.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WZProgressHUD.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WZPayment_Example/Pods-WZPayment_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F8089102D521A296821C842B /* [CP] Check Pods Manifest.lock */ = {
@@ -352,6 +402,9 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				28F63AFF2B39B1CB00E04BFF /* JSONParsing.swift in Sources */,
+				28F63AFC2B39AD8B00E04BFF /* PayApi.swift in Sources */,
+				28F63B002B39B1CB00E04BFF /* WZError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,10 +550,12 @@
 			baseConfigurationReference = 01A5780AD7FD68ED7BDA1D0F /* Pods-WZPayment_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = MV8GYHGPNQ;
 				INFOPLIST_FILE = WZPayment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tentoo.funfun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -512,10 +567,12 @@
 			baseConfigurationReference = 28EB12F37ED4F5F81E769740 /* Pods-WZPayment_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = MV8GYHGPNQ;
 				INFOPLIST_FILE = WZPayment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tentoo.funfun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -526,6 +583,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D8ED0904292AD4AA9ACED48 /* Pods-WZPayment_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = FZ8GWB3H9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -548,6 +606,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F4FD227240AEBDD3A3087D3 /* Pods-WZPayment_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = FZ8GWB3H9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",

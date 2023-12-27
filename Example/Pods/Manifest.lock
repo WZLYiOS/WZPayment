@@ -1,31 +1,91 @@
 PODS:
+  - Alamofire (5.8.1)
+  - Cache (6.0.0)
+  - CleanJSON (1.0.9)
+  - CocoaDebug (1.7.7)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
   - KeychainAccess (3.2.1)
-  - WZPayment (2.0.0):
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (15.0.0):
+    - Moya/Core
+    - RxSwift (~> 6.0)
+  - RxCocoa (6.6.0):
+    - RxRelay (= 6.6.0)
+    - RxSwift (= 6.6.0)
+  - RxRelay (6.6.0):
+    - RxSwift (= 6.6.0)
+  - RxSwift (6.6.0)
+  - WZDeviceKit (1.0.1)
+  - WZNetworks (6.1.9):
+    - WZNetworks/Core (= 6.1.9)
+  - WZNetworks/Core (6.1.9):
+    - Cache (~> 6.0.0)
+    - Moya (~> 15.0.0-alpha.1)
+    - Moya/RxSwift (~> 15.0.0-alpha.1)
+    - WZDeviceKit (~> 1.0.1)
+  - WZPayment (3.1.6):
     - KeychainAccess (~> 3.2.0)
+  - WZProgressHUD (1.1.2):
+    - WZProgressHUD/Source (= 1.1.2)
+  - WZProgressHUD/Source (1.1.2)
+  - WZRxExtension/DisposeBag (0.3.1):
+    - RxCocoa (>= 6.0.0)
+    - RxSwift (>= 6.0.0)
 
 DEPENDENCIES:
+  - CleanJSON (~> 1.0.9)
+  - CocoaDebug (~> 1.7.7)
   - FBSnapshotTestCase (~> 2.1.4)
+  - WZNetworks (~> 6.1.9)
   - WZPayment (from `../`)
+  - WZProgressHUD (~> 1.1.2)
+  - WZRxExtension/DisposeBag (~> 0.3.1)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
+    - Cache
+    - CleanJSON
+    - CocoaDebug
     - FBSnapshotTestCase
     - KeychainAccess
+    - Moya
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - WZDeviceKit
+    - WZNetworks
+    - WZProgressHUD
+    - WZRxExtension
 
 EXTERNAL SOURCES:
   WZPayment:
     :path: "../"
 
 SPEC CHECKSUMS:
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
+  CleanJSON: 910a36465ce4829e264a902ccf6d1455fdd9f980
+  CocoaDebug: b38d31464b91a9775928f8667d114db07b136565
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
-  WZPayment: 25cbd293c5e005bc66b15a876cc31101986f19a1
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
+  RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
+  WZDeviceKit: b8b6d37310d37f10e8e7eca4ac66eadbc1e853b9
+  WZNetworks: b5c021294c032d049001d229175aab2f498a1c38
+  WZPayment: 66692203193f5486233ead670ed14a7953f3d464
+  WZProgressHUD: 97589c5fbe3fd8b607745cf9b4fcb2db6fd25eaf
+  WZRxExtension: 0a06fc16624e3b577d061718d94c20898d4263ac
 
-PODFILE CHECKSUM: 200470f8e5a3cabd7b6ea7169fcc463024d8daaf
+PODFILE CHECKSUM: e036bc01345b07d8668ccc6a8c7a02b5be9f14e8
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3
