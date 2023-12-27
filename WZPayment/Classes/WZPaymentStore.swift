@@ -168,7 +168,8 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
             case .restored:
                 let isSave = save(data: WZSKModel(orderId: "",
                                      transactionId: tran.transactionIdentifier ?? "",
-                                     productId: tran.payment.productIdentifier))
+                                     productId: tran.payment.productIdentifier,
+                                     originalTransactionId: tran.original?.transactionIdentifier ?? "", price: ""))
                 if isSave {
                     if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
                         restoreHandler?(payments)
@@ -193,16 +194,15 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 let orderId = tran.payment.applicationUsername ?? ""
                 let productId = tran.payment.productIdentifier
                 let transactionId = tran.transactionIdentifier ?? ""
-                let originalTransactionId = tran.original?.transactionIdentifier
-                
-                let price = productRequest.sKProducts.first(where: {$0.productIdentifier == productId})
+                let originalTransactionId = tran.original?.transactionIdentifier ?? ""
+                let price = productRequest.sKProducts.first(where: {$0.productIdentifier == productId})?.price.stringValue ?? ""
                                 
                 /// 支付数据
                 var model = WZSKModel(orderId: orderId,
                                       transactionId: transactionId,
                                       productId: productId,
                                       originalTransactionId: originalTransactionId,
-                                      price: price?.price.stringValue)
+                                      price: price)
                 
                 /// 获取本地相同订单
                 if orderId.count == 0, let data = payments.first(where: {$0.productId == tran.payment.productIdentifier && $0.orderId.count > 0 && $0.transactionId.count == 0}) {

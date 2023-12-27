@@ -79,12 +79,12 @@ public class WZSKModel: Codable {
     public let productId: String
 
     /// 原始id
-    public var originalTransactionId: String?
+    public var originalTransactionId: String
     
     /// 价格
-    public var price: String?
+    public var price: String
     
-    init(orderId: String, transactionId: String, productId: String, originalTransactionId: String? = nil, price: String? = nil) {
+    init(orderId: String, transactionId: String, productId: String, originalTransactionId: String = "", price: String = "") {
         self.orderId = orderId
         self.transactionId = transactionId
         self.productId = productId

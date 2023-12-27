@@ -65,7 +65,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 //        let xx = \(arc4random_uniform(10199993))
         pay(orderId: "1739545410286882817", productId: model)
             .flatMap{ result in
-                return PayApi.upload(orderId: result.orderId, transactionId: result.transactionId, productId: result.productId, originalTransactionId: result.originalTransactionId ?? "", receipt: result.receipt, price: result.price ?? "")
+                return PayApi.upload(orderId: result.orderId, transactionId: result.transactionId, productId: result.productId, originalTransactionId: result.originalTransactionId, receipt: result.receipt, price: result.price)
                     .request()
                     .mapSuccess(isDebug: true)
                     .map { _ in
