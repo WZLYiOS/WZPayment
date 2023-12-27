@@ -81,11 +81,15 @@ public class WZSKModel: Codable {
     /// 原始id
     public var originalTransactionId: String?
     
-    init(orderId: String, transactionId: String, productId: String, originalTransactionId: String? = nil) {
+    /// 价格
+    public var price: String?
+    
+    init(orderId: String, transactionId: String, productId: String, originalTransactionId: String? = nil, price: String? = nil) {
         self.orderId = orderId
         self.transactionId = transactionId
         self.productId = productId
         self.originalTransactionId = originalTransactionId
+        self.price = price
     }
     
     enum CodingKeys: String, CodingKey {
@@ -93,6 +97,7 @@ public class WZSKModel: Codable {
         case transactionId = "transactionId"
         case productId = "productId"
         case originalTransactionId = "originalTransactionId"
+        case price = "price"
     }
     
     /// 获取沙河中凭证

@@ -5096,38 +5096,6 @@
 			};
 			name = Release;
 		};
-		239C5E25562C0B102F406107AD7BCCBD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 230716F1E9C8F3D7C7B94FB9BEFE7C55 /* WZPayment.debug.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/WZPayment/WZPayment-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/WZPayment/WZPayment-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/WZPayment/WZPayment.modulemap";
-				PRODUCT_MODULE_NAME = WZPayment;
-				PRODUCT_NAME = WZPayment;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		293E4D9A37B1EAE6C0CF58F4A0A09560 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AD95F32E573AE8EBA2B22B44580E6595 /* RxCocoa.release.xcconfig */;
@@ -5427,11 +5395,12 @@
 			};
 			name = Debug;
 		};
-		746EE20F3B1F594438DDCAD691B72B9D /* Release */ = {
+		78B9398B382F9261DBD355BDEEBF8172 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E079B9F09FF30396C5F17E1D5032B69 /* WZPayment.release.xcconfig */;
+			baseConfigurationReference = 230716F1E9C8F3D7C7B94FB9BEFE7C55 /* WZPayment.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -5443,7 +5412,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/WZPayment/WZPayment-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/WZPayment/WZPayment-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/WZPayment/WZPayment.modulemap";
@@ -5454,11 +5423,10 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		7AEC43428AC8218CD93A43473CE34947 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -6073,6 +6041,40 @@
 			};
 			name = Release;
 		};
+		F231423AF886E93C816AAE40664132DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E079B9F09FF30396C5F17E1D5032B69 /* WZPayment.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/WZPayment/WZPayment-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/WZPayment/WZPayment-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/WZPayment/WZPayment.modulemap";
+				PRODUCT_MODULE_NAME = WZPayment;
+				PRODUCT_NAME = WZPayment;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		F5E44DDE34049B46EE697B0F57D32A4D /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F6DA0D3A25DB783D6B03A52F6C85C52E /* CleanJSON.release.xcconfig */;
@@ -6287,8 +6289,8 @@
 		F64A2538E385B0599A0E166F9D099229 /* Build configuration list for PBXNativeTarget "WZPayment" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				239C5E25562C0B102F406107AD7BCCBD /* Debug */,
-				746EE20F3B1F594438DDCAD691B72B9D /* Release */,
+				78B9398B382F9261DBD355BDEEBF8172 /* Debug */,
+				F231423AF886E93C816AAE40664132DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

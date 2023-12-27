@@ -162,16 +162,7 @@ extension WZPaymentStore {
 extension WZPaymentStore: SKPaymentTransactionObserver  {
     
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-    
-        /// 按照时间排序
-//        let tranList = transactions.sorted(by: { (a, b) -> Bool in
-//            if let aD = a.transactionDate, let bd = b.transactionDate {
-//                return aD.compare(bd) == .orderedDescending
-//            }
-//            return false
-//        })
         
-    
         for (_, tran) in transactions.enumerated() {
             switch tran.transactionState {
             case .restored:
@@ -204,11 +195,14 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 let transactionId = tran.transactionIdentifier ?? ""
                 let originalTransactionId = tran.original?.transactionIdentifier
                 
+                let price = productRequest.sKProducts.first(where: {$0.productIdentifier == productId})
+                                
                 /// 支付数据
                 var model = WZSKModel(orderId: orderId,
                                       transactionId: transactionId,
                                       productId: productId,
-                                      originalTransactionId: originalTransactionId)
+                                      originalTransactionId: originalTransactionId,
+                                      price: price?.price.stringValue)
                 
                 /// 获取本地相同订单
                 if orderId.count == 0, let data = payments.first(where: {$0.productId == tran.payment.productIdentifier && $0.orderId.count > 0 && $0.transactionId.count == 0}) {

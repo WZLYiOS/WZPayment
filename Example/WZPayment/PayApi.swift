@@ -13,7 +13,7 @@ import Moya
 import Foundation
 
 public enum PayApi {
-    case upload(orderId: String, transactionId: String, productId: String, originalTransactionId: String, receipt: String)
+    case upload(orderId: String, transactionId: String, productId: String, originalTransactionId: String, receipt: String, price: String)
 }
 
 extension PayApi: TargetType{
@@ -35,8 +35,8 @@ extension PayApi: TargetType{
     
     public var task: Task {
         switch self {
-        case .upload(orderId: let orderId, transactionId: let transactionId, productId: let productId, originalTransactionId: let originalTransactionId, receipt: let receipt):
-            return Task.requestParameters(parameters: ["orderNo": orderId, "payId": transactionId, "productId": productId, "originalTransactionId": originalTransactionId, "transactionReceipt": receipt], encoding: JSONEncoding.default)
+        case .upload(orderId: let orderId, transactionId: let transactionId, productId: let productId, originalTransactionId: let originalTransactionId, receipt: let receipt, price: let price):
+            return Task.requestParameters(parameters: ["orderNo": orderId, "transactionId": transactionId, "productId": productId, "originalTransactionId": originalTransactionId, "transactionReceipt": receipt, "price": price], encoding: JSONEncoding.default)
         }
     }
     
