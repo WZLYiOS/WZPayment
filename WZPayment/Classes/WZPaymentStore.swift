@@ -182,7 +182,7 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 if let model = payments.first(where: {$0.orderId == currentOrderId}) {
                     remove(key: model.saveKey)
                 }
-                payFailHandler?(tran.error?.customError ?? SKError(_nsError: NSError(domain: "苹果服务器：支付发生未知错误", code: 10001)))
+                payFailHandler?(tran.error?.customError ?? SKError(_nsError: NSError(domain: "Unknown error", code: 10001)))
                 SKPaymentQueue.default().finishTransaction(tran)
             case .purchased:
                 
@@ -195,14 +195,16 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                 let productId = tran.payment.productIdentifier
                 let transactionId = tran.transactionIdentifier ?? ""
                 let originalTransactionId = tran.original?.transactionIdentifier ?? ""
-                let price = productRequest.sKProducts.first(where: {$0.productIdentifier == productId})?.price.stringValue ?? ""
-                                
+                let products = productRequest.sKProducts.first(where: {$0.productIdentifier == productId})
+                let price = products?.price.stringValue ?? ""
+                let currencyCode = products?.formatter.currencyCode ?? ""
+                
                 /// 支付数据
                 var model = WZSKModel(orderId: orderId,
                                       transactionId: transactionId,
                                       productId: productId,
                                       originalTransactionId: originalTransactionId,
-                                      price: price)
+                                      price: price, currency: currencyCode)
                 
                 /// 获取本地相同订单
                 if orderId.count == 0, let data = payments.first(where: {$0.productId == tran.payment.productIdentifier && $0.orderId.count > 0 && $0.transactionId.count == 0}) {

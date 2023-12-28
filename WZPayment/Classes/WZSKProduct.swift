@@ -11,8 +11,8 @@ import StoreKit
 // MARK - 获取苹果产品id请求
 public class WZSKProduct: NSObject {
     
-    typealias ProductSucessBlock = (_ products: SKProduct) -> Void
-    typealias productFailBlock = (_ error: Error) -> Void
+    public typealias ProductSucessBlock = (_ products: [SKProduct]) -> Void
+    public typealias productFailBlock = (_ error: Error) -> Void
     
     /// 当前产品id列表
     public var sKProducts: [SKProduct] = []
@@ -24,23 +24,26 @@ public class WZSKProduct: NSObject {
     private var productFailHandler: productFailBlock?
     
     /// 请求类
-    var productsRequest: SKProductsRequest?
+    private var productsRequest: SKProductsRequest?
     
-    func startGetProduct(productId: String, sucessHandler: ProductSucessBlock?, failHandler: productFailBlock?) {
-        productSucessHandler = sucessHandler
-        productFailHandler = failHandler
+    /// 获取产品信息
+    public func startGetProduct(productId: String, sucessHandler: ((_ products: SKProduct) -> Void)?, failHandler: productFailBlock?) {
         
         /// 获取支付
         guard let product = sKProducts.filter({$0.productIdentifier == productId}).first else {
-            requestProducts(products: [productId])
+            requestProducts(products: [productId], sucessHandler: { products in
+                sucessHandler?(products.first!)
+            }, failHandler: failHandler)
             return
         }
-        productSucessHandler?(product)
+        productSucessHandler?([product])
     }
     
     /// 获取产品列表
-    func requestProducts(products: [String]) {
-        
+    public func requestProducts(products: [String], sucessHandler: ProductSucessBlock?, failHandler: productFailBlock?) {
+        productSucessHandler = sucessHandler
+        productFailHandler = failHandler
+
         let productArr: Array<String> = products
         let sets:Set<String> = NSSet.init(array: productArr) as! Set<String>
         productsRequest = SKProductsRequest(productIdentifiers: sets)
@@ -57,8 +60,13 @@ extension WZSKProduct: SKProductsRequestDelegate {
             productFailHandler?(WZPaymentError.notproduct.err)
             return
         }
+        
+        /// 先去重再添加
+        response.products.forEach { value in
+            sKProducts.removeAll(where: {$0.productIdentifier == value.productIdentifier})
+        }
         sKProducts.append(contentsOf: response.products)
-        productSucessHandler?(response.products.first!)
+        productSucessHandler?(response.products)
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
@@ -84,12 +92,16 @@ public class WZSKModel: Codable {
     /// 价格
     public var price: String
     
-    init(orderId: String, transactionId: String, productId: String, originalTransactionId: String = "", price: String = "") {
+    /// 货币单位
+    public var currency: String
+    
+    init(orderId: String, transactionId: String, productId: String, originalTransactionId: String = "", price: String = "", currency: String = "") {
         self.orderId = orderId
         self.transactionId = transactionId
         self.productId = productId
         self.originalTransactionId = originalTransactionId
         self.price = price
+        self.currency = currency
     }
     
     enum CodingKeys: String, CodingKey {
@@ -98,6 +110,7 @@ public class WZSKModel: Codable {
         case productId = "productId"
         case originalTransactionId = "originalTransactionId"
         case price = "price"
+        case currency = "currency"
     }
     
     /// 获取沙河中凭证

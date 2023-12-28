@@ -45,21 +45,21 @@ extension SKError {
     var wzError: NSError {
         switch self.code {
         case .unknown:
-            return NSError(domain: "苹果服务器：未知错误，请联系客服", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：未知错误，请联系客服", code: 120009, userInfo: nil)
         case .paymentCancelled:
-            return NSError(domain: "苹果服务器：购买失败，您取消了付款", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：购买失败，您取消了付款", code: 120010, userInfo: nil)
         case .cloudServiceRevoked:
-            return NSError(domain: "苹果服务器：您已撤消使用此云服务的权限", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：您已撤消使用此云服务的权限", code: 120011, userInfo: nil)
         case .paymentInvalid:
-            return NSError(domain: "苹果服务器：App Store无法识别付款参数", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：App Store无法识别付款参数", code: 120012, userInfo: nil)
         case .paymentNotAllowed:
-            return NSError(domain: "苹果服务器：请开启授权付款权限", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：请开启授权付款权限", code: 120013, userInfo: nil)
         case .storeProductNotAvailable:
-            return NSError(domain: "苹果服务器：所请求的产品在商店中不可用。", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：所请求的产品在商店中不可用。", code: 120014, userInfo: nil)
         case .cloudServiceNetworkConnectionFailed:
-            return NSError(domain: "苹果服务器：设备无法连接到网络。", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：设备无法连接到网络。", code: 120015, userInfo: nil)
         default:
-            return NSError(domain: "苹果服务器：未知错误", code: self.code.rawValue, userInfo: nil)
+            return NSError(domain: "苹果服务器：未知错误", code: 12001016, userInfo: nil)
         }
     }
 }
