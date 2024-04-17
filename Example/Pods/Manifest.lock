@@ -30,7 +30,7 @@ PODS:
     - Moya (~> 15.0.0-alpha.1)
     - Moya/RxSwift (~> 15.0.0-alpha.1)
     - WZDeviceKit (~> 1.0.1)
-  - WZPayment (3.2.0):
+  - WZPayment (3.2.3):
     - KeychainAccess (>= 3.2.0)
   - WZProgressHUD (1.1.2):
     - WZProgressHUD/Source (= 1.1.2)
@@ -82,10 +82,10 @@ SPEC CHECKSUMS:
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   WZDeviceKit: b8b6d37310d37f10e8e7eca4ac66eadbc1e853b9
   WZNetworks: b5c021294c032d049001d229175aab2f498a1c38
-  WZPayment: 57a11362a027bd1459e081bb0a4221815384122b
+  WZPayment: aacb002409e2f499f473b75cb5b07226580c59d3
   WZProgressHUD: 97589c5fbe3fd8b607745cf9b4fcb2db6fd25eaf
   WZRxExtension: 0a06fc16624e3b577d061718d94c20898d4263ac
 
-PODFILE CHECKSUM: e036bc01345b07d8668ccc6a8c7a02b5be9f14e8
+PODFILE CHECKSUM: 6d7d90b4b6713993379a6f7da8a22262c6d659a9
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2
