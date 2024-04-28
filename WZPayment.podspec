@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WZPayment'
-  s.version          = '3.2.3'
+  s.version          = '3.2.4'
   s.summary          = '内购组件：支持自动补单，漏单可继续购买,订阅自动回调上报，获取订单价格等  '
 
   s.description      = <<-DESC
@@ -28,4 +28,5 @@ TODO: Add long description of t1212
 
   s.source_files = 'WZPayment/Classes/*.swift'
   s.dependency 'KeychainAccess', '>= 3.2.0'
+  s.dependency 'SwiftyStoreKit'
 end

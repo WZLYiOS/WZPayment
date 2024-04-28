@@ -25,6 +25,9 @@
   "dependencies": {
     "KeychainAccess": [
       ">= 3.2.0"
+    ],
+    "SwiftyStoreKit": [
+
     ]
   },
   "swift_version": "5.0"

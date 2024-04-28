@@ -136,6 +136,10 @@ extension WZPaymentStore {
     
     /// 移除本地订单
     public func remove(key: String) {
+        if let model = payments.first(where: {$0.orderId == key}), 
+            let transaction = SKPaymentQueue.default().transactions.first(where: {$0.payment.productIdentifier == model.productId}) {
+            SKPaymentQueue.default().finishTransaction(transaction)
+        }
         try? keych.remove(key)
         if key == currentOrderId {
             currentOrderId = nil
