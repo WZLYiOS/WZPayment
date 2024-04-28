@@ -31,7 +31,7 @@ PODS:
     - Moya (~> 15.0.0-alpha.1)
     - Moya/RxSwift (~> 15.0.0-alpha.1)
     - WZDeviceKit (~> 1.0.1)
-  - WZPayment (3.2.3):
+  - WZPayment (3.2.4):
     - KeychainAccess (>= 3.2.0)
     - SwiftyStoreKit
   - WZProgressHUD (1.1.2):
@@ -86,7 +86,7 @@ SPEC CHECKSUMS:
   SwiftyStoreKit: 6b9c08810269f030586dac1fae8e75871a82e84a
   WZDeviceKit: b8b6d37310d37f10e8e7eca4ac66eadbc1e853b9
   WZNetworks: b5c021294c032d049001d229175aab2f498a1c38
-  WZPayment: 2fa0514dfb7373c7521608fe02db072906554901
+  WZPayment: 0fa7489377e8c70a95e7285bdf35d13c9d4b303d
   WZProgressHUD: 97589c5fbe3fd8b607745cf9b4fcb2db6fd25eaf
   WZRxExtension: 0a06fc16624e3b577d061718d94c20898d4263ac
 

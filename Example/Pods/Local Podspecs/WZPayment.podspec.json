@@ -1,6 +1,6 @@
 {
   "name": "WZPayment",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "summary": "内购组件：支持自动补单，漏单可继续购买,订阅自动回调上报，获取订单价格等",
   "description": "TODO: Add long description of t1212",
   "homepage": "https://github.com/WZLYiOS/WZPayment",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/WZLYiOS/WZPayment.git",
-    "tag": "3.2.3"
+    "tag": "3.2.4"
   },
   "requires_arc": true,
   "static_framework": true,
