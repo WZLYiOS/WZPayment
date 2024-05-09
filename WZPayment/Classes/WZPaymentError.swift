@@ -64,21 +64,21 @@ extension SKError {
     var wzError: NSError {
         switch self.code {
         case .unknown:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.appleUnknown.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.appleUnknown.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         case .paymentCancelled:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.paymentCancelled.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.paymentCancelled.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         case .cloudServiceRevoked:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.cloudServiceRevoked.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.cloudServiceRevoked.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         case .paymentInvalid:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.paymentInvalid.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.paymentInvalid.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         case .paymentNotAllowed:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.paymentNotAllowed.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.paymentNotAllowed.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         case .storeProductNotAvailable:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.storeProductNotAvailable.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.storeProductNotAvailable.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         case .cloudServiceNetworkConnectionFailed:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.cloudServiceNetworkConnectionFailed.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.cloudServiceNetworkConnectionFailed.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         default:
-            return NSError(domain: self.localizedDescription, code: WZPaymentCode.appleUnknown.rawValue, userInfo: nil)
+            return NSError(domain: SKErrorDomain, code: WZPaymentCode.appleUnknown.rawValue, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
         }
     }
     

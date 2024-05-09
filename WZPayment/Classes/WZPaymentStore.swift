@@ -65,15 +65,11 @@ public class WZPaymentStore: NSObject {
         currentOrderId = orderId
         
         /// 0: 检测订单id
-        if orderId.count == 0 {
+        if orderId.count == 0 || productId.count == 0 {
             payFailHandler?(WZPaymentError.orderNil.err)
             return
         }
-        if productId.count == 0 {
-            payFailHandler?(WZPaymentError.productNil.err)
-            return
-        }
-        
+     
         /// 1: 检测是否开启内购
         if !SKPaymentQueue.canMakePayments() {
             payFailHandler?(WZPaymentError.NoCanPay.err)
