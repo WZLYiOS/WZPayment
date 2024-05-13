@@ -45,6 +45,7 @@ public class WZPaymentStore: NSObject {
     
     /// 订单id
     private var currentOrderId: String?
+    private var currentProductId: String?
         
     public override init() {
         super.init()
@@ -63,6 +64,7 @@ public class WZPaymentStore: NSObject {
         paySucessHandler = sucessHandler
         payFailHandler = failHandler
         currentOrderId = orderId
+        currentProductId = productId
         
         /// 0: 检测订单id
         if orderId.count == 0 || productId.count == 0 {
@@ -139,6 +141,7 @@ extension WZPaymentStore {
         try? keych.remove(key)
         if key == currentOrderId {
             currentOrderId = nil
+            currentProductId = nil
         }
         debugPrint("移除本地订单：\(key)")
     }
@@ -215,7 +218,7 @@ extension WZPaymentStore: SKPaymentTransactionObserver  {
                     debugPrint("支付成功，苹果返回订单编号\(model.orderId)")
                 }
                 save(data: model)
-                if model.orderId == currentOrderId {
+                if model.orderId == currentOrderId || (originalTransactionId.count > 0&&currentProductId == productId) {
                     paySucessHandler?(model)
                 }else{
                     if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
