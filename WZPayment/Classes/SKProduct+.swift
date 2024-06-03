@@ -19,6 +19,6 @@ public extension SKProduct {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = self.priceLocale
-        return formatter
+        return formatter 
     }
 }

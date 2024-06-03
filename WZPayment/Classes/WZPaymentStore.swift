@@ -31,21 +31,12 @@ public class WZPaymentStore: NSObject {
         return Keychain(service:(Bundle.main.bundleIdentifier ?? "com.wzly.payment")+".WZStore.applePay")
     }()
     
-    public typealias WZPaymentSucessBlock = (_ data: WZSKModel) -> Void
-    public typealias WZPaymentFailBlock = (_ error: Error) -> Void
-    
-    /// 购买成功回调可能包含l历史订单
-    private var paySucessHandler: WZPaymentSucessBlock?
-
-    /// 购买失败回调
-    private var payFailHandler: WZPaymentFailBlock?
-    
     /// 补单回调
     private var restoreHandler: ((_ datas: [WZSKModel]) -> Void)?
     
-    /// 订单id
-    private var currentOrderId: String?
-    private var currentProductId: String?
+    /// 当前支付
+    private var paymentArray: [WZMutablePayment] = []
+    
         
     public override init() {
         super.init()
@@ -60,28 +51,28 @@ public class WZPaymentStore: NSObject {
     /// - Parameters:
     ///   - productId: 苹果内购产品id
     ///   - tradeNoId: 订单编号
-    public func addPayment(productId: String, orderId: String, sucessHandler: WZPaymentSucessBlock?, failHandler: WZPaymentFailBlock?) {
-        paySucessHandler = sucessHandler
-        payFailHandler = failHandler
-        currentOrderId = orderId
-        currentProductId = productId
+    public func addPayment(productId: String,
+                           orderId: String,
+                           sucessHandler: ((_ data: WZSKModel) -> Void)?,
+                           failHandler: ((_ error: Error) -> Void)?) {
+      
         
         /// 0: 检测订单id
         if orderId.count == 0 || productId.count == 0 {
-            payFailHandler?(WZPaymentError.orderNil.err)
+            failHandler?(WZPaymentError.orderNil.err)
             return
         }
      
         /// 1: 检测是否开启内购
         if !SKPaymentQueue.canMakePayments() {
-            payFailHandler?(WZPaymentError.NoCanPay.err)
+            failHandler?(WZPaymentError.NoCanPay.err)
             return
         }
         
         /// 当前有未补的单
-        if payments.filter({$0.transactionId.count > 0}).count > 0 {
-            payFailHandler?(WZPaymentError.history.err)
-            restoreHandler?(payments)
+        if getDBPayments().filter({$0.transactionId.count > 0}).count > 0 {
+            failHandler?(WZPaymentError.history.err)
+            restoreHandler?(getDBPayments())
             return
         }
         
@@ -89,19 +80,31 @@ public class WZPaymentStore: NSObject {
         productRequest.startGetProduct(productId: productId, sucessHandler: { [weak self](product) in
             guard let self = self else { return }
             
-            /// 保存钥匙串订单编号
-            if !self.save(data: WZSKModel(orderId: orderId, transactionId: "", productId: productId)) {
-                self.payFailHandler?(WZPaymentError.orderDb.err)
-                return
-            }
+//            /// 保存钥匙串订单编号
+//            if !self.save(data: WZSKModel(orderId: orderId, transactionId: "", productId: productId)) {
+//                self.payFailHandler?(WZPaymentError.orderDb.err)
+//                return
+//            }
             
             /// 支付请求
-            let payment = SKMutablePayment(product: product)
-            payment.applicationUsername = orderId
-            SKPaymentQueue.default().add(payment)
-        }) { [weak self](error) in
-            guard let self = self else { return }
-            self.payFailHandler?(error.customError)
+            let payment = WZMutablePayment(product: product, orderId: orderId) { result in
+                
+                switch result {
+                case let .failed(error):
+                        failHandler?(error)
+                case let .purchased(data):
+                    sucessHandler?(data)
+                case let .restored(data):
+                    sucessHandler?(data)
+                default:
+                    break
+                }
+            }
+            SKPaymentQueue.default().add(payment.pay)
+            paymentArray.append(payment)
+      
+        }) { (error) in
+            failHandler?(error.customError)
         }
     }
 }
@@ -120,8 +123,8 @@ extension WZPaymentStore {
         return true
     }
     
-    /// 获取支付数据
-    public var payments: [WZSKModel] {
+    /// 获取本地订单
+    public func getDBPayments() -> [WZSKModel] {
         var list: [WZSKModel] = []
         for key in keych.allKeys() {
             if let data =  try? keych.getData(key),
@@ -131,24 +134,20 @@ extension WZPaymentStore {
         }
         return list
     }
-    
     /// 移除本地订单
     public func remove(key: String) {
-        if let model = payments.first(where: {$0.orderId == key}), 
+        if let model = getDBPayments().first(where: {$0.orderId == key}),
             let transaction = SKPaymentQueue.default().transactions.first(where: {$0.payment.productIdentifier == model.productId}) {
             SKPaymentQueue.default().finishTransaction(transaction)
         }
         try? keych.remove(key)
-        if key == currentOrderId {
-            currentOrderId = nil
-            currentProductId = nil
-        }
         debugPrint("移除本地订单：\(key)")
     }
     
     /// 补单
     public func restoreTransaction(isRefreshApple: Bool = false, restoreHandler: ((_ datas: [WZSKModel]) -> Void)?){
         self.restoreHandler = restoreHandler
+        let payments = getDBPayments()
         if payments.count > 0 {
             restoreHandler?(payments)
         }else{
@@ -159,85 +158,171 @@ extension WZPaymentStore {
             }
         }
     }
+    
+    /// 获取沙河中凭证
+    static public var receipt: String {
+        let base64String = receiptData?.base64EncodedString(options: .endLineWithLineFeed) ?? ""
+        return base64String
+    }
+    
+    /// 支付凭证
+    static public var receiptData: Data? {
+        guard let url = Bundle.main.appStoreReceiptURL else {
+            return nil
+        }
+        let receiptData = try? Data(contentsOf: url)
+        return receiptData
+    }
 }
 
 /// 系统代理
 extension WZPaymentStore: SKPaymentTransactionObserver  {
-    
+
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         
-        for (_, tran) in transactions.enumerated() {
-            switch tran.transactionState {
-            case .restored:
-                let isSave = save(data: WZSKModel(orderId: "",
-                                     transactionId: tran.transactionIdentifier ?? "",
-                                     productId: tran.payment.productIdentifier,
-                                     originalTransactionId: tran.original?.transactionIdentifier ?? "", price: ""))
-                if isSave {
-                    if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
-                        restoreHandler?(payments)
-                    }
-                    SKPaymentQueue.default().finishTransaction(tran)
-                }else{
-                    payFailHandler?(WZPaymentError.db.err)
-                }
-            case .failed:
-                if let model = payments.first(where: {$0.orderId == currentOrderId}) {
-                    remove(key: model.saveKey)
-                }
-                payFailHandler?(tran.error?.customError ?? SKError(_nsError: NSError(domain: "Unknown error", code: 10001)))
-                SKPaymentQueue.default().finishTransaction(tran)
-            case .purchased:
-                
-                /// 判断是否正常下单逻辑
-                ///1、 applicationUsername 设置为订单编号
-                ///2、applicationUsername 为空，拿到本地订单编号
-                ///3、保存新的支付数据存入数据库
-                
+        /// 获取正常支付中的
+        let processTransactions = transactions.filter {!processTransaction($0, paymentQueue: queue)}
+        
+        /// 回调补单的
+        restoreCompletedTransactions(processTransactions, paymentQueue: queue)
+    }
+}
+
+extension WZPaymentStore {
+        
+    /// 获取
+    private func findPaymentIndex(tran: SKPaymentTransaction) -> Int? {
+        return paymentArray.firstIndex(where: {$0.product.productIdentifier == tran.payment.productIdentifier})
+    }
+    
+    /// 完成交易
+    private func processTransaction(_ tran: SKPaymentTransaction, paymentQueue: SKPaymentQueue) -> Bool {
+        
+        guard let index = findPaymentIndex(tran: tran) else {
+            return false
+        }
+        let payment = paymentArray[index]
+        let orderId = tran.payment.applicationUsername ?? payment.orderId
+        let productId = tran.payment.productIdentifier
+        let transactionId = tran.transactionIdentifier ?? ""
+        let originalTransactionId = tran.original?.transactionIdentifier ?? ""
+        let price = payment.product.price.stringValue
+        let currencyCode = payment.product.formatter.currencyCode ?? ""
+        /// 支付数据
+        let model = WZSKModel(orderId: orderId,
+                              transactionId: transactionId,
+                              productId: productId,
+                              originalTransactionId: originalTransactionId,
+                              price: price, currency: currencyCode)
+        
+        switch tran.transactionState {
+        case .purchased:
+
+            /// 把支付记录保存本地
+            save(data: model)
+            paymentQueue.finishTransaction(tran)
+            payment.callback(.purchased(purchase: model))
+            paymentArray.remove(at: index)
+            return true
+        case .failed:
+            let message = "Unknown error"
+            let altError = NSError(domain: SKErrorDomain, code: SKError.unknown.rawValue, userInfo: [ NSLocalizedDescriptionKey: message ])
+            let nsError = tran.error ?? altError
+            paymentQueue.finishTransaction(tran)
+            payment.callback(.failed(error: nsError as NSError))
+            paymentArray.remove(at: index)
+            return true
+        case .restored:
+            paymentQueue.finishTransaction(tran)
+            payment.callback(.purchased(purchase: model))
+            paymentArray.remove(at: index)
+            return true
+        case .deferred:
+            payment.callback(.deferred(purchase: model))
+            paymentArray.remove(at: index)
+            return true
+        default:
+            return false
+        }
+    }
+    
+    /// 去重，并取最新的
+    private func removeDuplicates(inputArray: [SKPaymentTransaction]) -> [SKPaymentTransaction] {
+        var tempArray = inputArray
+        var result: [SKPaymentTransaction] = []
+        
+        /// 反转一下取最近的
+        for item in tempArray.reversed() {
+            if !result.contains(where: {$0.payment.productIdentifier == item.payment.productIdentifier}) {
+                result.append(item)
+            }
+        }
+        return result
+    }
+    
+    /// 补单
+    private func restoreCompletedTransactions(_ trans: [SKPaymentTransaction], paymentQueue: SKPaymentQueue) {
+        
+        let personsArray = removeDuplicates(inputArray: trans.filter({$0.transactionState != .purchasing}))
+        if personsArray.count == 0 {
+            return
+        }
+        
+        /// 获取商品
+        productRequest.requestProducts(products: personsArray.map({$0.payment.productIdentifier})) { [self] products in
+            
+            let results = personsArray.map { tran in
                 let orderId = tran.payment.applicationUsername ?? ""
                 let productId = tran.payment.productIdentifier
                 let transactionId = tran.transactionIdentifier ?? ""
                 let originalTransactionId = tran.original?.transactionIdentifier ?? ""
-                let products = productRequest.sKProducts.first(where: {$0.productIdentifier == productId})
-                let price = products?.price.stringValue ?? ""
-                let currencyCode = products?.formatter.currencyCode ?? ""
-                
+                let product = productRequest.sKProducts.first(where: {$0.productIdentifier == tran.payment.productIdentifier})
+                let price = product?.price.stringValue ?? ""
+                let currencyCode = product?.formatter.currencyCode ?? ""
                 /// 支付数据
-                var model = WZSKModel(orderId: orderId,
+                let model = WZSKModel(orderId: orderId,
                                       transactionId: transactionId,
                                       productId: productId,
                                       originalTransactionId: originalTransactionId,
                                       price: price, currency: currencyCode)
-                
-                /// 获取本地相同订单
-                if orderId.count == 0, let data = payments.first(where: {$0.productId == tran.payment.productIdentifier && $0.orderId.count > 0 && $0.transactionId.count == 0}) {
-                    data.transactionId = tran.transactionIdentifier ?? ""
-                    model = data
-                    debugPrint("支付成功，从本地拿订单编号\(model.orderId)")
-                }else{
-                    debugPrint("支付成功，苹果返回订单编号\(model.orderId)")
-                }
                 save(data: model)
-                if model.orderId == currentOrderId || (originalTransactionId.count > 0&&currentProductId == productId) {
-                    paySucessHandler?(model)
-                }else{
-                    if tran.payment.productIdentifier == transactions.last?.payment.productIdentifier {
-                        restoreHandler?(payments)
-                    }
-                }
-                SKPaymentQueue.default().finishTransaction(tran)
-            case .deferred:
-                SKPaymentQueue.default().finishTransaction(tran)
-            case .purchasing: break
-            @unknown default: break
+                return model
             }
+            restoreHandler?(results)
+        } failHandler: { error in
+            self.restoreHandler?([])
         }
     }
 }
 
-
-
-
-
-
-
+// MARK - 支付列表
+public class WZMutablePayment: NSObject {
+    
+    public enum TransactionResult {
+        case purchased(purchase: WZSKModel)
+        case restored(purchase: WZSKModel)
+        case deferred(purchase: WZSKModel)
+        case failed(error: NSError)
+    }
+    
+    // 回调
+    let callback: (TransactionResult) -> Void
+    
+    /// 购买记录
+    let product: SKProduct
+    
+    /// 支付
+    let pay: SKMutablePayment
+    
+    /// 订单编号
+    let orderId: String
+    
+    init(product: SKProduct, orderId: String, callback: @escaping (TransactionResult) -> Void) {
+        self.callback = callback
+        self.product = product
+        self.pay = SKMutablePayment(product: product)
+        self.orderId = orderId
+        super.init()
+        self.pay.applicationUsername = orderId
+    }
+}

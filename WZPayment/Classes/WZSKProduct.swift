@@ -36,19 +36,38 @@ public class WZSKProduct: NSObject {
             }, failHandler: failHandler)
             return
         }
-        productSucessHandler?([product])
+        sucessHandler?(product)
     }
     
     /// 获取产品列表
     public func requestProducts(products: [String], sucessHandler: ProductSucessBlock?, failHandler: productFailBlock?) {
         productSucessHandler = sucessHandler
         productFailHandler = failHandler
-
+        
         let productArr: Array<String> = products
         let sets:Set<String> = NSSet.init(array: productArr) as! Set<String>
+        
+        /// 判断本地是否有
+        let tem = sets.map({$0})
+        let arr = sKProducts.filter { product in
+            tem.contains { $0 == product.productIdentifier }
+        }
+        if arr.count == sets.count {
+            sucessHandler?(arr)
+            return
+        }
         productsRequest = SKProductsRequest(productIdentifiers: sets)
         productsRequest?.delegate = self
         productsRequest?.start()
+    }
+    
+    /// 获取商品
+    func getProduct(product: String, comple: ((_ result: SKProduct?)-> Void)? = nil) {
+        startGetProduct(productId: product) { products in
+            comple?(products)
+        } failHandler: { error in
+            comple?(nil)
+        }
     }
 }
 
