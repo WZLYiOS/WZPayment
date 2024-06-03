@@ -53,6 +53,7 @@ public class WZPaymentStore: NSObject {
     ///   - tradeNoId: 订单编号
     public func addPayment(productId: String,
                            orderId: String,
+                           atomically: Bool,
                            sucessHandler: ((_ data: WZSKModel) -> Void)?,
                            failHandler: ((_ error: Error) -> Void)?) {
       
@@ -87,7 +88,7 @@ public class WZPaymentStore: NSObject {
 //            }
             
             /// 支付请求
-            let payment = WZMutablePayment(product: product, orderId: orderId) { result in
+            let payment = WZMutablePayment(product: product, orderId: orderId, atomically: atomically) { result in
                 
                 switch result {
                 case let .failed(error):
@@ -220,7 +221,9 @@ extension WZPaymentStore {
 
             /// 把支付记录保存本地
             save(data: model)
-            paymentQueue.finishTransaction(tran)
+            if payment.atomically {
+                paymentQueue.finishTransaction(tran)
+            }
             payment.callback(.purchased(purchase: model))
             paymentArray.remove(at: index)
             return true
@@ -233,7 +236,9 @@ extension WZPaymentStore {
             paymentArray.remove(at: index)
             return true
         case .restored:
-            paymentQueue.finishTransaction(tran)
+            if payment.atomically {
+                paymentQueue.finishTransaction(tran)
+            }
             payment.callback(.purchased(purchase: model))
             paymentArray.remove(at: index)
             return true
@@ -288,6 +293,9 @@ extension WZPaymentStore {
                 save(data: model)
                 return model
             }
+            personsArray.forEach {
+                paymentQueue.finishTransaction($0)
+            }
             restoreHandler?(results)
         } failHandler: { error in
             self.restoreHandler?([])
@@ -317,11 +325,15 @@ public class WZMutablePayment: NSObject {
     /// 订单编号
     let orderId: String
     
-    init(product: SKProduct, orderId: String, callback: @escaping (TransactionResult) -> Void) {
+    /// 是否自动结单
+    let atomically: Bool
+    
+    init(product: SKProduct, orderId: String, atomically: Bool,callback: @escaping (TransactionResult) -> Void) {
         self.callback = callback
         self.product = product
         self.pay = SKMutablePayment(product: product)
         self.orderId = orderId
+        self.atomically = atomically
         super.init()
         self.pay.applicationUsername = orderId
     }
