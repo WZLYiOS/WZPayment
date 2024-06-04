@@ -65,11 +65,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 //        let xx = \(arc4random_uniform(10199993))
         pay(orderId: "1739545410286882817", productId: model)
             .flatMap{ result in
-                return PayApi.upload(orderId: result.orderId, transactionId: result.transactionId, productId: result.productId, originalTransactionId: result.originalTransactionId, receipt: result.receipt, price: result.price)
+                return PayApi.upload(orderId: result.purchase.orderId, transactionId: result.purchase.transactionId, productId: result.purchase.productId, originalTransactionId: result.purchase.originalTransactionId, receipt: result.purchase.receipt, price: result.purchase.price)
                     .request()
                     .mapSuccess(isDebug: true)
                     .map { _ in
-                        self.paymentStore.remove(key: result.saveKey)
+                        self.paymentStore.remove(key: result.purchase.saveKey)
                     }
             }
             .subscribe(onNext: { [weak self] (result) in
@@ -81,9 +81,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     /// 内购支付
-    private func pay(orderId: String, productId: String) -> Observable<WZSKModel> {
+    private func pay(orderId: String, productId: String) -> Observable<WZPaymentTransaction> {
         return Observable.create { (observable) -> Disposable in
-            self.paymentStore.addPayment(productId: productId, orderId: orderId) { model in
+            self.paymentStore.addPayment(productId: productId, orderId: orderId, atomically: true) { model in
                 observable.onNext((model))
                 observable.onCompleted()
             } failHandler: { error in
