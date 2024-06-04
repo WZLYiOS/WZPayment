@@ -276,6 +276,7 @@ extension WZPaymentStore {
         /// 获取商品
         productRequest.requestProducts(products: personsArray.map({$0.payment.productIdentifier})) { [self] products in
             
+            /// 系统补单不存入db
             let results = personsArray.map { tran in
                 let orderId = tran.payment.applicationUsername ?? ""
                 let productId = tran.payment.productIdentifier
@@ -290,7 +291,6 @@ extension WZPaymentStore {
                                       productId: productId,
                                       originalTransactionId: originalTransactionId,
                                       price: price, currency: currencyCode)
-                save(data: model)
                 return model
             }
             personsArray.forEach {
