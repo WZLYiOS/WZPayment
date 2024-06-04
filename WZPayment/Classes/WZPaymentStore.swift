@@ -54,7 +54,7 @@ public class WZPaymentStore: NSObject {
     public func addPayment(productId: String,
                            orderId: String,
                            atomically: Bool,
-                           sucessHandler: ((_ data: WZPaymentTransaction) -> Void)?,
+                           sucessHandler: ((_ data: WZSKModel) -> Void)?,
                            failHandler: ((_ error: Error) -> Void)?) {
       
         
@@ -224,10 +224,7 @@ extension WZPaymentStore {
             if payment.atomically {
                 paymentQueue.finishTransaction(tran)
             }
-            payment.callback(.purchased(purchase: WZPaymentTransaction(tran: tran,
-                                                                       queue: paymentQueue,
-                                                                       product: payment.product,
-                                                                       purchase: model)))
+            payment.callback(.purchased(purchase: model))
             paymentArray.remove(at: index)
             return true
         case .failed:
@@ -242,17 +239,11 @@ extension WZPaymentStore {
             if payment.atomically {
                 paymentQueue.finishTransaction(tran)
             }
-            payment.callback(.purchased(purchase: WZPaymentTransaction(tran: tran,
-                                                                       queue: paymentQueue,
-                                                                       product: payment.product,
-                                                                       purchase: model)))
+            payment.callback(.purchased(purchase: model))
             paymentArray.remove(at: index)
             return true
         case .deferred:
-            payment.callback(.deferred(purchase: WZPaymentTransaction(tran: tran,
-                                                                      queue: paymentQueue,
-                                                                      product: payment.product,
-                                                                      purchase: model)))
+            payment.callback(.deferred(purchase: model))
             paymentArray.remove(at: index)
             return true
         default:
@@ -262,7 +253,7 @@ extension WZPaymentStore {
     
     /// 去重，并取最新的
     private func removeDuplicates(inputArray: [SKPaymentTransaction]) -> [SKPaymentTransaction] {
-        let tempArray = inputArray
+        var tempArray = inputArray
         var result: [SKPaymentTransaction] = []
         
         /// 反转一下取最近的
@@ -316,9 +307,9 @@ extension WZPaymentStore {
 public class WZMutablePayment: NSObject {
     
     public enum TransactionResult {
-        case purchased(purchase: WZPaymentTransaction)
-        case restored(purchase: WZPaymentTransaction)
-        case deferred(purchase: WZPaymentTransaction)
+        case purchased(purchase: WZSKModel)
+        case restored(purchase: WZSKModel)
+        case deferred(purchase: WZSKModel)
         case failed(error: Error)
     }
     
@@ -346,20 +337,4 @@ public class WZMutablePayment: NSObject {
         super.init()
         self.pay.applicationUsername = orderId
     }
-}
-
-// MARK - 支付事物
-public struct WZPaymentTransaction {
-    
-    /// 支付
-    public let tran: SKPaymentTransaction
-    
-    /// 队列
-    public let queue: SKPaymentQueue
-    
-    /// type name
-    public let product: SKProduct
-    
-    /// 支付结果
-    public let purchase: WZSKModel
 }
