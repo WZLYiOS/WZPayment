@@ -75,17 +75,19 @@ public class WZSKProduct: NSObject {
 extension WZSKProduct: SKProductsRequestDelegate {
     /// SKProductsRequestDelegate
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        if response.products.count == 0 {
-            productFailHandler?(WZPaymentError.notproduct.err)
-            return
+        DispatchQueue.main.async {
+            if response.products.count == 0 {
+                self.productFailHandler?(WZPaymentError.notproduct.err)
+                return
+            }
+            
+            /// 先去重再添加
+            response.products.forEach { value in
+                self.sKProducts.removeAll(where: {$0.productIdentifier == value.productIdentifier})
+            }
+            self.sKProducts.append(contentsOf: response.products)
+            self.productSucessHandler?(response.products)
         }
-        
-        /// 先去重再添加
-        response.products.forEach { value in
-            sKProducts.removeAll(where: {$0.productIdentifier == value.productIdentifier})
-        }
-        sKProducts.append(contentsOf: response.products)
-        productSucessHandler?(response.products)
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
