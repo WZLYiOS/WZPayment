@@ -53,7 +53,7 @@ public class WZPaymentStore: NSObject {
     ///   - tradeNoId: 订单编号
     public func addPayment(productId: String,
                            orderId: String,
-                           atomically: Bool,
+                           atomically: Bool = true,
                            sucessHandler: ((_ data: WZSKModel) -> Void)?,
                            failHandler: ((_ error: Error) -> Void)?) {
       
@@ -81,11 +81,11 @@ public class WZPaymentStore: NSObject {
         productRequest.startGetProduct(productId: productId, sucessHandler: { [weak self](product) in
             guard let self = self else { return }
             
-//            /// 保存钥匙串订单编号
-//            if !self.save(data: WZSKModel(orderId: orderId, transactionId: "", productId: productId)) {
-//                self.payFailHandler?(WZPaymentError.orderDb.err)
-//                return
-//            }
+            /// 保存钥匙串订单编号
+            if !self.save(data: WZSKModel(orderId: orderId, transactionId: "", productId: productId)) {
+                failHandler?(WZPaymentError.orderDb.err)
+                return
+            }
             
             /// 支付请求
             let payment = WZMutablePayment(product: product, orderId: orderId, atomically: atomically) { result in
@@ -103,7 +103,6 @@ public class WZPaymentStore: NSObject {
             }
             SKPaymentQueue.default().add(payment.pay)
             paymentArray.append(payment)
-      
         }) { (error) in
             failHandler?(error.customError)
         }
@@ -229,9 +228,10 @@ extension WZPaymentStore {
             return true
         case .failed:
             let message = "Unknown error"
-            let altError = NSError(domain: SKErrorDomain, code: SKError.unknown.rawValue, userInfo: [ NSLocalizedDescriptionKey: message ])
+            let altError = NSError(domain: SKErrorDomain, code: SKError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message ])
             let nsError = tran.error ?? altError
             paymentQueue.finishTransaction(tran)
+            remove(key: orderId)
             payment.callback(.failed(error: nsError.customError))
             paymentArray.remove(at: index)
             return true
@@ -239,10 +239,15 @@ extension WZPaymentStore {
             if payment.atomically {
                 paymentQueue.finishTransaction(tran)
             }
+            if originalTransactionId.count > 0 {
+                model.transactionId = originalTransactionId
+            }
+            save(data: model)
             payment.callback(.purchased(purchase: model))
             paymentArray.remove(at: index)
             return true
         case .deferred:
+            remove(key: orderId)
             payment.callback(.deferred(purchase: model))
             paymentArray.remove(at: index)
             return true
@@ -253,7 +258,7 @@ extension WZPaymentStore {
     
     /// 去重，并取最新的
     private func removeDuplicates(inputArray: [SKPaymentTransaction]) -> [SKPaymentTransaction] {
-        var tempArray = inputArray
+        let tempArray = inputArray
         var result: [SKPaymentTransaction] = []
         
         /// 反转一下取最近的
