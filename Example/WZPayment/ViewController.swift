@@ -40,7 +40,7 @@ public class ViewController: UIViewController {
         
         paymentStore.restoreTransaction { datas in
             datas.forEach {
-                self.paymentStore.remove(key: $0.saveKey)
+                self.paymentStore.remove(key: $0.orderId)
             }
         }
     }
@@ -69,7 +69,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                     .request()
                     .mapSuccess(isDebug: true)
                     .map { _ in
-                        self.paymentStore.remove(key: result.saveKey)
+                        self.paymentStore.remove(key: result.orderId)
                     }
             }
             .subscribe(onNext: { [weak self] (result) in

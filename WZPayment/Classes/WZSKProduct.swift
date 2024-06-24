@@ -148,14 +148,5 @@ public class WZSKModel: Codable {
         let receiptData = try? Data(contentsOf: url)
         return receiptData
     }
-    
-    /// 保存钥匙串的key
-    public var saveKey: String {
-        let orderKey = "com.wzly.keych.order."
-        if orderId.count > 0 {
-            return orderKey+orderId
-        }
-        return orderKey+"transactionId"+transactionId
-    }
 }
 

@@ -115,11 +115,11 @@ extension WZPaymentStore {
     /// 保存
     @discardableResult
     private func save(data: WZSKModel) -> Bool {
-        guard let jsonData = try? JSONEncoder().encode(data), let _ = try? keych.set(jsonData, key: data.saveKey) else {
-            debugPrint("添加本地订单失败：\(data.saveKey)")
+        guard let jsonData = try? JSONEncoder().encode(data), let _ = try? keych.set(jsonData, key: data.orderId) else {
+            debugPrint("添加本地订单失败：\(data.orderId)")
             return false
         }
-        debugPrint("添加本地订单成功：\(data.saveKey)")
+        debugPrint("添加本地订单成功：\(data.orderId)")
         return true
     }
     
@@ -208,6 +208,7 @@ extension WZPaymentStore {
         let originalTransactionId = tran.original?.transactionIdentifier ?? ""
         let price = payment.product.price.stringValue
         let currencyCode = payment.product.formatter.currencyCode ?? ""
+        
         /// 支付数据
         let model = WZSKModel(orderId: orderId,
                               transactionId: transactionId,
@@ -290,6 +291,16 @@ extension WZPaymentStore {
                 let product = productRequest.sKProducts.first(where: {$0.productIdentifier == tran.payment.productIdentifier})
                 let price = product?.price.stringValue ?? ""
                 let currencyCode = product?.formatter.currencyCode ?? ""
+                
+                /// 本地查下订单有无为完成的单
+                if let m = getDBPayments().first(where: {$0.orderId == orderId}) {
+                    m.transactionId = transactionId
+                    m.originalTransactionId = originalTransactionId
+                    m.price = price
+                    m.currency = currencyCode
+                    return m
+                }
+                
                 /// 支付数据
                 let model = WZSKModel(orderId: orderId,
                                       transactionId: transactionId,
