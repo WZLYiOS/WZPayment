@@ -211,7 +211,7 @@ extension WZPaymentStore {
             return false
         }
         let payment = paymentArray[index]
-        let orderId = tran.payment.applicationUsername ?? payment.orderId
+        let orderId = payment.orderId
         let productId = tran.payment.productIdentifier
         let transactionId = tran.transactionIdentifier ?? ""
         let originalTransactionId = tran.original?.transactionIdentifier ?? ""
@@ -241,7 +241,7 @@ extension WZPaymentStore {
             let altError = NSError(domain: SKErrorDomain, code: SKError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message ])
             let nsError = tran.error ?? altError
             paymentQueue.finishTransaction(tran)
-            remove(key: orderId)
+            remove(key: model.saveKey)
             payment.callback(.failed(error: nsError.customError))
             paymentArray.remove(at: index)
             return true
@@ -257,7 +257,7 @@ extension WZPaymentStore {
             paymentArray.remove(at: index)
             return true
         case .deferred:
-            remove(key: orderId)
+            remove(key: model.saveKey)
             payment.callback(.deferred(purchase: model))
             paymentArray.remove(at: index)
             return true
