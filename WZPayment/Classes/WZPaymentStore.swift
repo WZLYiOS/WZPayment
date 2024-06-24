@@ -41,11 +41,18 @@ public class WZPaymentStore: NSObject {
     /// 当前支付
     private var paymentArray: [WZMutablePayment] = []
     
-    func startObserving() {
+    public override init() {
+        super.init()
+        SKPaymentQueue.default().add(self)
+    }
+    
+    /// 添加监听
+    public func startObserving() {
         SKPaymentQueue.default().add(self)
     }
 
-    func stopObserving() {
+    /// 停止监听
+    public func stopObserving() {
         SKPaymentQueue.default().remove(self)
     }
     
@@ -117,11 +124,11 @@ extension WZPaymentStore {
     /// 保存
     @discardableResult
     private func save(data: WZSKModel) -> Bool {
-        guard let jsonData = try? JSONEncoder().encode(data), let _ = try? keych.set(jsonData, key: data.orderId) else {
-            debugPrint("添加本地订单失败：\(data.orderId)")
+        guard let jsonData = try? JSONEncoder().encode(data), let _ = try? keych.set(jsonData, key: data.saveKey) else {
+            debugPrint("添加本地订单失败：\(data.saveKey)")
             return false
         }
-        debugPrint("添加本地订单成功：\(data.orderId)")
+        debugPrint("添加本地订单成功：\(data.saveKey)")
         return true
     }
     
@@ -294,12 +301,13 @@ extension WZPaymentStore {
                 let price = product?.price.stringValue ?? ""
                 let currencyCode = product?.formatter.currencyCode ?? ""
                 
-                /// 本地查下订单有无为完成的单
-                if let m = getDBPayments().first(where: {$0.orderId == orderId}) {
+                /// 本地查下订单有无未完成的单
+                if let m = getDBPayments().first(where: {$0.productId == productId}) {
                     m.transactionId = transactionId
                     m.originalTransactionId = originalTransactionId
                     m.price = price
                     m.currency = currencyCode
+                    save(data: m)
                     return m
                 }
                 
@@ -321,38 +329,3 @@ extension WZPaymentStore {
     }
 }
 
-// MARK - 支付列表
-public class WZMutablePayment: NSObject {
-    
-    public enum TransactionResult {
-        case purchased(purchase: WZSKModel)
-        case restored(purchase: WZSKModel)
-        case deferred(purchase: WZSKModel)
-        case failed(error: Error)
-    }
-    
-    // 回调
-    let callback: (TransactionResult) -> Void
-    
-    /// 购买记录
-    let product: SKProduct
-    
-    /// 支付
-    let pay: SKMutablePayment
-    
-    /// 订单编号
-    let orderId: String
-    
-    /// 是否自动结单
-    let atomically: Bool
-    
-    init(product: SKProduct, orderId: String, atomically: Bool,callback: @escaping (TransactionResult) -> Void) {
-        self.callback = callback
-        self.product = product
-        self.pay = SKMutablePayment(product: product)
-        self.orderId = orderId
-        self.atomically = atomically
-        super.init()
-        self.pay.applicationUsername = orderId
-    }
-}
