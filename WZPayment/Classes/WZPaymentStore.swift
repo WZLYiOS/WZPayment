@@ -21,6 +21,10 @@ import KeychainAccess
 // MAKR - 内购控制
 public class WZPaymentStore: NSObject {
         
+    public static let `default`: WZPaymentStore = {
+        return $0
+    }(WZPaymentStore())
+    
     /// 获取产品列表
     public lazy var productRequest: WZSKProduct = {
         return $0
@@ -37,13 +41,11 @@ public class WZPaymentStore: NSObject {
     /// 当前支付
     private var paymentArray: [WZMutablePayment] = []
     
-        
-    public override init() {
-        super.init()
+    func startObserving() {
         SKPaymentQueue.default().add(self)
     }
-    
-    deinit {
+
+    func stopObserving() {
         SKPaymentQueue.default().remove(self)
     }
     

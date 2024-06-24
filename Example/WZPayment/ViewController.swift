@@ -15,11 +15,6 @@ import WZNetworks
 import Moya
 
 public class ViewController: UIViewController {
-
-    ///
-    private lazy var paymentStore: WZPaymentStore = {
-        return $0
-    }(WZPaymentStore())
     
     /// 产品id
     public var dataList: [String] = ["funfun_text_recharge_10000coins", "funfun_text_recharge_1800coins", "com.temtuux.1000", "2023120301", "2023120306", "2023120307"]
@@ -38,9 +33,9 @@ public class ViewController: UIViewController {
         view.addSubview(tableView)
         tableView.frame = view.bounds
         
-        paymentStore.restoreTransaction { datas in
+        WZPaymentStore.default.restoreTransaction { datas in
             datas.forEach {
-                self.paymentStore.remove(key: $0.orderId)
+                WZPaymentStore.default.remove(key: $0.orderId)
             }
         }
     }
@@ -69,7 +64,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                     .request()
                     .mapSuccess(isDebug: true)
                     .map { _ in
-                        self.paymentStore.remove(key: result.orderId)
+                        WZPaymentStore.default.remove(key: result.orderId)
                     }
             }
             .subscribe(onNext: { [weak self] (result) in
@@ -83,7 +78,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     /// 内购支付
     private func pay(orderId: String, productId: String) -> Observable<WZSKModel> {
         return Observable.create { (observable) -> Disposable in
-            self.paymentStore.addPayment(productId: productId, orderId: orderId, atomically: false) { model in
+            WZPaymentStore.default.addPayment(productId: productId, orderId: orderId, atomically: false) { model in
                 observable.onNext((model))
                 observable.onCompleted()
             } failHandler: { error in
