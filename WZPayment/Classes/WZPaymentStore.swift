@@ -125,10 +125,10 @@ extension WZPaymentStore {
     @discardableResult
     private func save(data: WZSKModel) -> Bool {
         guard let jsonData = try? JSONEncoder().encode(data), let _ = try? keych.set(jsonData, key: data.saveKey) else {
-            debugPrint("添加本地订单失败：\(data.saveKey)")
+            debugPrint("Store：添加本地订单失败：\(data.saveKey)")
             return false
         }
-        debugPrint("添加本地订单成功：\(data.saveKey)")
+        debugPrint("Store：添加本地订单成功：\(data.saveKey)")
         return true
     }
     
@@ -145,12 +145,15 @@ extension WZPaymentStore {
     }
     /// 移除本地订单
     public func remove(key: String) {
-        if let model = getDBPayments().first(where: {$0.orderId == key}),
-            let transaction = SKPaymentQueue.default().transactions.first(where: {$0.payment.productIdentifier == model.productId}) {
-            SKPaymentQueue.default().finishTransaction(transaction)
+//        if let model = getDBPayments().first(where: {$0.orderId == key}),
+//            let transaction = SKPaymentQueue.default().transactions.first(where: {$0.payment.productIdentifier == model.productId}) {
+//            SKPaymentQueue.default().finishTransaction(transaction)
+//        }
+        if key.count == 0 {
+            return
         }
         try? keych.remove(key)
-        debugPrint("移除本地订单：\(key)")
+        debugPrint("Store：移除本地订单：\(key)")
     }
     
     /// 补单

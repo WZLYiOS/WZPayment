@@ -91,7 +91,9 @@ extension WZSKProduct: SKProductsRequestDelegate {
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
-        productFailHandler?(WZPaymentError.custom(error.localizedDescription).err)
+        DispatchQueue.main.async {
+            productFailHandler?(WZPaymentError.custom(error.localizedDescription).err)
+        }
     }
 }
  
