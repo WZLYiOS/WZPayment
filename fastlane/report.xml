@@ -5,57 +5,19 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000292">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000332">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: version_get_podspec" time="0.000584">
+      <testcase classname="fastlane.lanes" name="1: version_get_podspec" time="0.000672">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: pod_lib_lint" time="15.865228">
+      <testcase classname="fastlane.lanes" name="2: pod_lib_lint" time="22.188652">
         
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="03: version_bump_podspec" time="0.002425">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="04: git_add" time="0.028005">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="05: git_commit" time="0.05326">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="06: push_to_git_remote" time="4.678551">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="07: git_tag_exists" time="0.024658">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="08: add_git_tag" time="0.029435">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="09: push_git_tags" time="3.719897">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="10: pod_push" time="54.205875">
+          <failure message="/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/runner.rb:229:in `chdir&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/runner.rb:229:in `execute_action&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing&apos;&#10;Fastfile:33:in `block (2 levels) in parsing_binding&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/lane.rb:41:in `call&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/runner.rb:49:in `block in execute&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/runner.rb:45:in `chdir&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/runner.rb:45:in `execute&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/lane_manager.rb:46:in `cruise_lane&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/command_line_handler.rb:34:in `handle&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/commands_generator.rb:363:in `run&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/commands_generator.rb:43:in `start&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/fastlane-2.220.0/bin/fastlane:23:in `&lt;top (required)&gt;&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/bin/fastlane:25:in `load&apos;&#10;/Users/qiuqixiang/.rbenv/versions/3.3.0/bin/fastlane:25:in `&lt;main&gt;&apos;&#10;&#10;Exit status of command &apos;bundle exec pod lib lint --allow-warnings&apos; was 1 instead of 0.&#10;&#10; -&gt; WZPayment -&gt; WZPayment (3.3.7)&#10;    - ERROR | [iOS] xcodebuild: Returned an unsuccessful exit code. You can use `--verbose` for more information.&#10;    - NOTE  | xcodebuild:  note: Using codesigning identity override: -&#10;    - NOTE  | [iOS] xcodebuild:  note: Building targets in dependency order&#10;    - NOTE  | [iOS] xcodebuild:  note: Target dependency graph (4 targets)&#10;    - ERROR | xcodebuild:  /Users/qiuqixiang/Desktop/iOS/WZKit/WZPayment/WZPayment/Classes/WZSKProduct.swift:95:13: error: reference to property &apos;productFailHandler&apos; in closure requires explicit use of &apos;self&apos; to make capture semantics explicit&#10;    - NOTE  | xcodebuild:  /Users/qiuqixiang/Desktop/iOS/WZKit/WZPayment/WZPayment/Classes/WZSKProduct.swift:95:13: note: reference &apos;self.&apos; explicitly&#10;    - NOTE  | xcodebuild:  /Users/qiuqixiang/Desktop/iOS/WZKit/WZPayment/WZPayment/Classes/WZSKProduct.swift:94:34: note: capture &apos;self&apos; explicitly to enable implicit &apos;self&apos; in this closure&#10;    - NOTE  | [iOS] xcodebuild:  note: Metadata extraction skipped. No AppIntents.framework dependency found. (in target &apos;KeychainAccess&apos; from project &apos;Pods&apos;)&#10;    - NOTE  | [iOS] xcodebuild:  Pods.xcodeproj: warning: The iOS Simulator deployment target &apos;IPHONEOS_DEPLOYMENT_TARGET&apos; is set to 9.0, but the range of supported deployment target versions is 12.0 to 17.5.99. (in target &apos;KeychainAccess&apos; from project &apos;Pods&apos;)&#10;&#10;[!] WZPayment did not pass validation, due to 2 errors.&#10;You can use the `--no-clean` option to inspect any issue.&#10;" />
         
       </testcase>
     
